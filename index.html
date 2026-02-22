@@ -1,0 +1,2660 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Soul Knight — Guida Essenziale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0e0e1a;
+            --surface: #181828;
+            --card: #1f1f35;
+            --accent: #e94560;
+            --accent2: #7c3aed;
+            --gold: #f59e0b;
+            --blue: #38bdf8;
+            --text: #e2e8f0;
+            --muted: #8892aa;
+            --border: rgba(255,255,255,0.07);
+            --nav-h: 64px;
+            --radius: 16px;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100dvh;
+            padding-bottom: calc(var(--nav-h) + var(--safe-bottom) + 16px);
+            overflow-x: hidden;
+        }
+
+        /* ── Top Header ── */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: rgba(14,14,26,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .top-bar .logo-icon {
+            width: 36px; height: 36px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: grid; place-items: center;
+            font-size: 18px; flex-shrink: 0;
+            box-shadow: 0 0 16px rgba(233,69,96,.4);
+        }
+        .top-bar h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: .03em;
+            line-height: 1;
+        }
+        .top-bar h1 span { color: var(--accent); }
+
+        /* ── Bottom Nav ── */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 300;
+            background: rgba(24,24,40,0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            height: calc(var(--nav-h) + var(--safe-bottom));
+            padding-bottom: var(--safe-bottom);
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            scroll-snap-type: x mandatory;
+            gap: 2px;
+            padding: 6px 4px;
+            padding-bottom: calc(6px + var(--safe-bottom));
+        }
+        .bottom-nav::-webkit-scrollbar { display: none; }
+
+        .nav-item {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            padding: 6px 10px;
+            border-radius: 12px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .2s;
+            min-width: 60px;
+            font-family: 'Nunito', sans-serif;
+        }
+        .nav-item .nav-emoji { font-size: 20px; line-height: 1; }
+        .nav-item .nav-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+
+        .nav-item.active {
+            color: #fff;
+            background: rgba(233,69,96,.15);
+        }
+        .nav-item.active .nav-emoji { filter: drop-shadow(0 0 6px var(--accent)); }
+        .nav-item.ai-nav {
+            background: linear-gradient(135deg, rgba(124,58,237,.3), rgba(233,69,96,.3));
+            color: #c4b5fd;
+        }
+        .nav-item.ai-nav.active { color: #fff; }
+
+        /* ── Main Content ── */
+        main { padding: 16px; max-width: 680px; margin: 0 auto; }
+
+        .section { display: none; animation: slideUp .3s ease; }
+        .section.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Section Header ── */
+        .section-header {
+            margin-bottom: 20px;
+        }
+        .section-header h2 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+        .section-header h2 .accent { color: var(--accent); }
+        .section-header p {
+            color: var(--muted);
+            font-size: .9rem;
+            margin-top: 6px;
+        }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            margin-bottom: 14px;
+        }
+        .card h3 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card p, .card li { font-size: .9rem; line-height: 1.6; color: #c0cce0; }
+        .card ul { padding-left: 18px; }
+        .card li { margin-bottom: 6px; }
+        .card strong { color: var(--text); }
+
+        /* ── Tip Box ── */
+        .tip {
+            background: linear-gradient(135deg, rgba(233,69,96,.08), rgba(233,69,96,.03));
+            border: 1px solid rgba(233,69,96,.3);
+            border-left: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
+        }
+        .tip .tip-label {
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .tip p { font-size: .9rem; color: #c0cce0; line-height: 1.6; }
+
+        /* ── Stat Pills ── */
+        .stat-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .stat-pill {
+            background: rgba(255,255,255,.06);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: .78rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .stat-pill.hp { color: #f87171; }
+        .stat-pill.shield { color: #60a5fa; }
+        .stat-pill.mana { color: #a78bfa; }
+
+        /* ── Tier Badges ── */
+        .tier-s { color: var(--gold); }
+        .tier-a { color: #fb923c; }
+        .tier-b { color: var(--blue); }
+
+        /* ── Hero Cards (mobile grid) ── */
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .hero-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            transition: border-color .2s;
+            cursor: default;
+        }
+        .hero-card:active { border-color: var(--accent); }
+        .hero-card .hero-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .hero-card .hero-passive {
+            font-size: .72rem;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+
+        /* ── Collapsible Sections ── */
+        .collapse-btn {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: var(--text);
+            padding: 14px 18px;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-size: .95rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            transition: background .2s;
+        }
+        .collapse-btn:active { background: rgba(255,255,255,.08); }
+        .collapse-btn .arrow { transition: transform .3s; font-size: 1.1rem; }
+        .collapse-btn.open .arrow { transform: rotate(180deg); }
+        .collapse-body {
+            display: none;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0 0 14px 14px;
+            margin-top: -10px;
+            margin-bottom: 8px;
+            padding: 14px 16px;
+        }
+        .collapse-body.open { display: block; }
+        .collapse-body p, .collapse-body li { font-size: .88rem; color: #c0cce0; line-height: 1.6; }
+        .collapse-body ul { padding-left: 16px; }
+        .collapse-body li { margin-bottom: 6px; }
+
+        /* ── Mode Cards ── */
+        .mode-card {
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 10px;
+            border-left: 4px solid;
+        }
+        .mode-card.badass { background: rgba(239,68,68,.08); border-color: #ef4444; }
+        .mode-card.boss   { background: rgba(139,92,246,.08); border-color: #8b5cf6; }
+        .mode-card.origin { background: rgba(56,189,248,.08); border-color: #38bdf8; }
+        .mode-card.matrix { background: rgba(34,197,94,.08); border-color: #22c55e; }
+        .mode-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+        .mode-card.badass h3 { color: #ef4444; }
+        .mode-card.boss h3 { color: #8b5cf6; }
+        .mode-card.origin h3 { color: #38bdf8; }
+        .mode-card.matrix h3 { color: #22c55e; }
+        .mode-card p { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+
+        /* ── Lobby Items ── */
+        .lobby-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .lobby-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+        }
+        .lobby-item .li-icon { font-size: 1.5rem; margin-bottom: 6px; }
+        .lobby-item .li-name { font-size: .8rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .lobby-item .li-desc { font-size: .72rem; color: var(--muted); line-height: 1.4; }
+
+        /* ── AI Build Generator ── */
+        .ai-hero-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+        .ai-hero-btn {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 6px;
+            color: var(--muted);
+            font-family: 'Nunito', sans-serif;
+            font-size: .8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            text-align: center;
+        }
+        .ai-hero-btn .hero-emoji { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+        .ai-hero-btn.selected {
+            border-color: var(--accent);
+            background: rgba(233,69,96,.12);
+            color: #fff;
+        }
+
+        .style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+        .style-btn {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            color: var(--muted);
+            font-family: 'Nunito', sans-serif;
+            font-size: .8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .2s;
+            text-align: center;
+        }
+        .style-btn .style-emoji { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+        .style-btn.selected {
+            border-color: var(--accent2);
+            background: rgba(124,58,237,.12);
+            color: #fff;
+        }
+
+        .generate-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--accent), #b91c4a);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 16px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: .05em;
+            cursor: pointer;
+            transition: all .2s;
+            box-shadow: 0 4px 20px rgba(233,69,96,.35);
+        }
+        .generate-btn:active { transform: scale(0.98); box-shadow: 0 2px 10px rgba(233,69,96,.25); }
+        .generate-btn:disabled { opacity: .6; cursor: not-allowed; }
+
+        .spinner {
+            display: none;
+            margin: 24px auto;
+            width: 40px; height: 40px;
+            border: 3px solid rgba(255,255,255,.1);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .ai-result-card {
+            display: none;
+            background: linear-gradient(135deg, rgba(124,58,237,.1), rgba(233,69,96,.05));
+            border: 1px solid rgba(124,58,237,.3);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 16px;
+            animation: slideUp .4s ease;
+        }
+        .ai-result-card h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; color: #c4b5fd; margin-bottom: 12px; }
+        .ai-result-card h4 { font-family: 'Rajdhani', sans-serif; font-size: 1.05rem; color: var(--blue); margin: 12px 0 6px; }
+        .ai-result-card ul { padding-left: 18px; }
+        .ai-result-card li { font-size: .9rem; color: #c0cce0; margin-bottom: 6px; line-height: 1.5; }
+        .ai-result-card p { font-size: .9rem; color: #c0cce0; line-height: 1.6; }
+        .ai-result-card strong { color: var(--text); }
+        .ai-error { color: #f87171; font-size: .85rem; text-align: center; margin-top: 14px; display: none; }
+
+        /* ── Quick-start chip row ── */
+        .chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .chip {
+            background: rgba(255,255,255,.06);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: .78rem;
+            font-weight: 700;
+            color: var(--muted);
+        }
+        .chip.red   { background: rgba(239,68,68,.1);  border-color: rgba(239,68,68,.3);  color: #f87171; }
+        .chip.blue  { background: rgba(56,189,248,.1); border-color: rgba(56,189,248,.3); color: var(--blue); }
+        .chip.green { background: rgba(34,197,94,.1);  border-color: rgba(34,197,94,.3);  color: #4ade80; }
+
+        /* ── Weapon tier list ── */
+        .tier-block { margin-bottom: 14px; }
+        .tier-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: .85rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .tier-label.s { background: rgba(245,158,11,.15); color: var(--gold); }
+        .tier-label.a { background: rgba(251,146,60,.15); color: #fb923c; }
+        .tier-label.b { background: rgba(56,189,248,.15); color: var(--blue); }
+        .weapon-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+        .weapon-chip {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px 12px;
+            font-size: .82rem;
+            color: var(--text);
+        }
+
+        /* ── Character Full Cards ── */
+        .char-full-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .cfc-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .cfc-header.free   { background: linear-gradient(135deg, rgba(74,222,128,.12), rgba(74,222,128,.04)); border-bottom: 1px solid rgba(74,222,128,.2); }
+        .cfc-header.paid   { background: linear-gradient(135deg, rgba(251,146,60,.12), rgba(251,146,60,.04)); border-bottom: 1px solid rgba(251,146,60,.2); }
+        .cfc-header.secret { background: linear-gradient(135deg, rgba(196,181,253,.12), rgba(196,181,253,.04)); border-bottom: 1px solid rgba(196,181,253,.2); }
+        .cfc-header.special{ background: linear-gradient(135deg, rgba(56,189,248,.12), rgba(56,189,248,.04)); border-bottom: 1px solid rgba(56,189,248,.2); }
+        .cfc-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .cfc-cost {
+            font-size: .72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+        .free   .cfc-cost { background: rgba(74,222,128,.15);  color: #4ade80; }
+        .paid   .cfc-cost { background: rgba(251,146,60,.15);  color: #fb923c; }
+        .secret .cfc-cost { background: rgba(196,181,253,.15); color: #c4b5fd; }
+        .special .cfc-cost { background: rgba(56,189,248,.15); color: #38bdf8; }
+        .cfc-stats { padding: 8px 14px; display: flex; gap: 6px; flex-wrap: wrap; }
+        .cfc-info {
+            padding: 4px 14px 12px;
+            font-size: .8rem;
+            color: #9aa5be;
+            line-height: 1.8;
+        }
+        .cfc-label {
+            font-weight: 700;
+            color: var(--muted);
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+            margin-right: 4px;
+        }
+
+        /* ── Weapon Tables ── */
+        .weapon-cat-title {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 20px 0 10px;
+            padding-left: 4px;
+            border-left: 3px solid var(--gold);
+            padding-left: 10px;
+        }
+        .weapon-table-wrap {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 6px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .weapon-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .78rem;
+            min-width: 480px;
+        }
+        .weapon-table thead tr {
+            background: rgba(233,69,96,.15);
+        }
+        .weapon-table th {
+            padding: 9px 10px;
+            text-align: left;
+            color: var(--text);
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .weapon-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255,255,255,.04);
+            color: #c0cce0;
+            vertical-align: top;
+        }
+        .weapon-table tr:last-child td { border-bottom: none; }
+        .weapon-table tr:hover td { background: rgba(255,255,255,.03); }
+        .r-white  { color: #e2e8f0; font-weight: 700; white-space: nowrap; }
+        .r-green  { color: #4ade80; font-weight: 700; white-space: nowrap; }
+        .r-blue   { color: #60a5fa; font-weight: 700; white-space: nowrap; }
+        .r-purple { color: #a78bfa; font-weight: 700; white-space: nowrap; }
+        .r-orange { color: #fb923c; font-weight: 700; white-space: nowrap; }
+        .r-red    { color: #e94560; font-weight: 700; white-space: nowrap; }
+
+        /* ── Boss Cards ── */
+        .boss-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .boss-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            gap: 8px;
+            border-left: 4px solid;
+            flex-wrap: wrap;
+        }
+        .boss-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .boss-diff {
+            font-size: .68rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+        .boss-diff.easy   { background: rgba(74,222,128,.15);  color: #4ade80; }
+        .boss-diff.medium { background: rgba(251,191,36,.15);  color: #fbbf24; }
+        .boss-diff.hard   { background: rgba(239,68,68,.15);   color: #f87171; }
+        .boss-body {
+            padding: 10px 14px 14px;
+            font-size: .82rem;
+            color: #9aa5be;
+            line-height: 1.7;
+        }
+        .boss-body p { margin-bottom: 6px; }
+        .boss-body strong { color: var(--text); }
+        .boss-drop {
+            font-size: .75rem;
+            font-weight: 700;
+            color: var(--gold);
+            background: rgba(245,158,11,.08);
+            border: 1px solid rgba(245,158,11,.2);
+            border-radius: 8px;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* scroll top */
+        #scrollTopBtn {
+            position: fixed;
+            bottom: calc(var(--nav-h) + var(--safe-bottom) + 16px);
+            right: 16px;
+            z-index: 250;
+            width: 42px; height: 42px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 16px rgba(233,69,96,.5);
+            transition: transform .2s;
+        }
+        #scrollTopBtn:active { transform: scale(.9); }
+
+        /* Responsive bigger screens */
+        @media (min-width: 600px) {
+            .ai-hero-grid { grid-template-columns: repeat(4, 1fr); }
+            .hero-grid { grid-template-columns: repeat(3, 1fr); }
+            .lobby-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<header class="top-bar">
+    <div class="logo-icon">⚔️</div>
+    <h1>Soul Knight <span>Guide</span></h1>
+</header>
+
+<!-- MAIN -->
+<main>
+
+    <!-- HOME -->
+    <section id="home" class="section active">
+        <div class="section-header">
+            <h2>Benvenuto nel <span class="accent">Dungeon!</span></h2>
+            <p>Il tuo compagno di viaggio per sopravvivere al caos di Soul Knight.</p>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">💡 Cos'è un Roguelike?</div>
+            <p>Se muori, <strong>è finita</strong>. Perdi armi e potenziamenti temporanei. Mantieni però <strong>Gemme e Materiali</strong> per upgrade permanenti nella Lobby.</p>
+        </div>
+
+        <div class="card">
+            <h3>🎯 Obiettivo</h3>
+            <p>La campagna ha <strong>3 Piani</strong>, ognuno con 5 livelli. Elimina i nemici per aprire il portale e affronta il <strong>Boss</strong> al livello 5 di ogni piano.</p>
+        </div>
+
+        <div class="card">
+            <h3>⚡ Consigli Rapidi</h3>
+            <ul>
+                <li><strong>Muoviti sempre</strong> — stare fermi è la morte.</li>
+                <li><strong>Usa le coperture</strong> per rigenerare l'armatura.</li>
+                <li><strong>Le armi melee distruggono proiettili</strong> — usale come scudo attivo.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- MECCANICHE -->
+    <section id="meccaniche" class="section">
+        <div class="section-header">
+            <h2>Statistiche <span class="accent">Vitali</span></h2>
+            <p>Controlla sempre l'angolo in alto a sinistra.</p>
+        </div>
+
+        <div class="card">
+            <h3>❤️ Salute — Barra Rossa</h3>
+            <p>Tuoi punti vita effettivi. Se scende a zero, <strong>game over</strong>. Non si rigenera automaticamente: usa pozioni rosse o abilità speciali.</p>
+        </div>
+
+        <div class="card">
+            <h3>🛡️ Armatura — Barra Grigia</h3>
+            <p>Prima linea di difesa. I danni colpiscono l'armatura prima della salute.</p>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">🔑 Segreto dell'Armatura</div>
+            <p>Se non subisci danni per qualche secondo, l'armatura si rigenera automaticamente. <strong>Nasconditi dietro i muri</strong> per ricaricarla!</p>
+        </div>
+
+        <div class="card">
+            <h3>💙 Energia — Barra Blu</h3>
+            <p>Le tue munizioni. Ricaricala uccidendo nemici, rompendo casse di legno o raccogliendo sfere blu.</p>
+        </div>
+    </section>
+
+    <!-- PERSONAGGI -->
+    <section id="personaggi" class="section">
+        <div class="section-header">
+            <h2>Eroi & <span class="accent">Abilità</span></h2>
+            <p>Attualmente ci sono <strong>41 eroi</strong> giocabili (3 leggendari). Costo upgrade da Lv.1→8: <strong>30.500 Gemme totali</strong> per qualsiasi personaggio.</p>
+        </div>
+
+        <!-- Tier List Aggiornata -->
+        <div class="tip">
+            <div class="tip-label">🏆 Tier List Aggiornata (2024-2025)</div>
+            <p>Basata su performance in Badass Mode e Boss Rush. I personaggi al livello 6+ con il buff passivo possono scalare di 1-2 tier.</p>
+        </div>
+        <div class="tier-block">
+            <span class="tier-label s">🥇 Tier S — Meta</span>
+            <div class="chip-row">
+                <span class="chip">Furfante</span><span class="chip">Assassino</span><span class="chip">Paladino</span>
+                <span class="chip">Necromante</span><span class="chip">Astromante</span><span class="chip">Signore della Guerra</span>
+            </div>
+        </div>
+        <div class="tier-block">
+            <span class="tier-label a">🥈 Tier A — Ottimi</span>
+            <div class="chip-row">
+                <span class="chip">Cavaliere</span><span class="chip">Ingegnere</span><span class="chip">Robot</span>
+                <span class="chip">Fisico</span><span class="chip">Lanciere</span><span class="chip">Mastro di Spada</span>
+                <span class="chip">Gunner</span><span class="chip">Combattente</span>
+            </div>
+        </div>
+        <div class="tier-block">
+            <span class="tier-label b">🥉 Tier B — Validi</span>
+            <div class="chip-row">
+                <span class="chip">Alchimista</span><span class="chip">Vampiro</span><span class="chip">Lupo Mannaro</span>
+                <span class="chip">Elfo</span><span class="chip">Sacerdotessa</span><span class="chip">Strega</span>
+                <span class="chip">Ninja del Tempo</span><span class="chip">Trap Master</span>
+            </div>
+        </div>
+        <div class="tier-block" style="margin-bottom:4px;">
+            <span class="tier-label" style="background:rgba(239,68,68,.12);color:#f87171;">💀 Tier C/D</span>
+            <div class="chip-row">
+                <span class="chip">Berserker</span><span class="chip">Mago</span><span class="chip">Druido</span>
+                <span class="chip">Ufficiale</span><span class="chip">Minatore</span><span class="chip">Inviato degli Elementi</span>
+            </div>
+        </div>
+
+        <!-- Upgrade costi tabella -->
+        <div class="card" style="margin-top:20px">
+            <h3>💰 Costi Upgrade Personaggio</h3>
+            <div style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+                    <thead>
+                        <tr style="background:rgba(233,69,96,.2);">
+                            <th style="padding:8px;text-align:left;color:var(--text);white-space:nowrap;">Livello</th>
+                            <th style="padding:8px;text-align:left;color:var(--text);white-space:nowrap;">Costo</th>
+                            <th style="padding:8px;text-align:left;color:var(--text);">Beneficio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:8px;color:#60a5fa;">⭐ Lv. 1→2</td>
+                            <td style="padding:8px;color:var(--gold);">500 💎</td>
+                            <td style="padding:8px;color:#c0cce0;">+1 HP o +1 Scudo</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:8px;color:#60a5fa;">⭐⭐ Lv. 2→3</td>
+                            <td style="padding:8px;color:var(--gold);">1.000 💎</td>
+                            <td style="padding:8px;color:#c0cce0;">-1 sec cooldown abilità</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:8px;color:#60a5fa;">⭐⭐⭐ Lv. 3→4</td>
+                            <td style="padding:8px;color:var(--gold);">2.000 💎</td>
+                            <td style="padding:8px;color:#c0cce0;">-2 sec cooldown abilità</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:8px;color:#fb923c;">⭐⭐⭐⭐ Lv. 4→5</td>
+                            <td style="padding:8px;color:var(--gold);">2.500 💎</td>
+                            <td style="padding:8px;color:#c0cce0;">Potenziamento abilità unico</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border);background:rgba(233,69,96,.06);">
+                            <td style="padding:8px;color:#e94560;font-weight:700;">⭐×5 Lv. 5→6</td>
+                            <td style="padding:8px;color:var(--gold);font-weight:700;">5.000 💎</td>
+                            <td style="padding:8px;color:#fff;font-weight:700;">🔓 Buff Passivo Permanente!</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid var(--border);">
+                            <td style="padding:8px;color:#a78bfa;">⭐×6 Lv. 6→7</td>
+                            <td style="padding:8px;color:var(--gold);">8.000 💎</td>
+                            <td style="padding:8px;color:#c0cce0;">Upgrade arma iniziale permanente</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px;color:#a78bfa;">⭐×7 Lv. 7→8</td>
+                            <td style="padding:8px;color:var(--gold);">10.000 💎</td>
+                            <td style="padding:8px;color:#c0cce0;">Materiale Artefatto Evocatore</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Eroi Gratuiti (Gemme) -->
+        <h3 style="font-family:'Rajdhani',sans-serif;color:#4ade80;margin:22px 0 12px;font-size:1.15rem;">🆓 Eroi Gratuiti (Gemme)</h3>
+
+        <div class="char-full-card">
+            <div class="cfc-header free">
+                <span class="cfc-name">⚔️ Cavaliere</span>
+                <span class="cfc-cost">GRATUITO</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 6</span><span class="stat-pill shield">🛡️ 5</span><span class="stat-pill mana">💙 180</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Pistola<br>
+                <span class="cfc-label">Skill 1</span> Doppio fuoco (usa tutte le armi insieme)<br>
+                <span class="cfc-label">Skill 2</span> Fuoco superiore (infligge effetti elementali casuali)<br>
+                <span class="cfc-label">Buff Lv.6</span> Nessun danno extra quando lo scudo si rompe
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header free">
+                <span class="cfc-name">🗡️ Furfante (Rogue)</span>
+                <span class="cfc-cost">2.000 💎</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 5</span><span class="stat-pill shield">🛡️ 3</span><span class="stat-pill mana">💙 180</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Pistola<br>
+                <span class="cfc-label">Skill 1</span> Iaido — carica e spara con danno aumentato<br>
+                <span class="cfc-label">Skill 2</span> Cartwheel — schivata con invincibilità<br>
+                <span class="cfc-label">Buff Lv.6</span> I proiettili critici trapassano i nemici
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header free">
+                <span class="cfc-name">🧙 Strega (Witch/Wizard)</span>
+                <span class="cfc-cost">3.000 💎</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 3</span><span class="stat-pill shield">🛡️ 5</span><span class="stat-pill mana">💙 240</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Staff magico<br>
+                <span class="cfc-label">Skill 1</span> Frost Penetrante — congela i nemici<br>
+                <span class="cfc-label">Skill 2</span> Tempesta di Fuoco — AoE fuoco massiccio<br>
+                <span class="cfc-label">Buff Lv.6</span> Proiettili elementali: doppio danno se critici
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header free">
+                <span class="cfc-name">🥷 Assassino</span>
+                <span class="cfc-cost">4.000 💎</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 4</span><span class="stat-pill shield">🛡️ 4</span><span class="stat-pill mana">💙 180</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Spada<br>
+                <span class="cfc-label">Skill 1</span> Doppelgänger — crea un clone esca esplosivo<br>
+                <span class="cfc-label">Skill 2</span> Invisibilità — invincibilità temporanea<br>
+                <span class="cfc-label">Buff Lv.6</span> Armi melee respingono i proiettili nemici
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header free">
+                <span class="cfc-name">⚗️ Alchimista</span>
+                <span class="cfc-cost">5.000 💎</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 5</span><span class="stat-pill shield">🛡️ 5</span><span class="stat-pill mana">💙 180</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Bottiglia pozione<br>
+                <span class="cfc-label">Skill 1</span> Pozioni Elementali — lancia pozioni con effetti casuali<br>
+                <span class="cfc-label">Buff Lv.6</span> Immunità veleno + danni veleno aumentati ai nemici
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header free">
+                <span class="cfc-name">🧝 Elfo</span>
+                <span class="cfc-cost">12.000 💎</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 4</span><span class="stat-pill shield">🛡️ 4</span><span class="stat-pill mana">💙 200</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Arco<br>
+                <span class="cfc-label">Skill 1</span> Pioggia di Frecce — grandine di frecce AoE<br>
+                <span class="cfc-label">Skill 2</span> Elfo Guardiano — evoca elfi elementali (Fuoco/Vento/Acqua)<br>
+                <span class="cfc-label">Buff Lv.6</span> Frecce critiche creano esplosioni elementali
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header free">
+                <span class="cfc-name">🙏 Sacerdotessa (Priest)</span>
+                <span class="cfc-cost">12.000 💎</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 3</span><span class="stat-pill shield">🛡️ 5</span><span class="stat-pill mana">💙 200</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Bastone sacro<br>
+                <span class="cfc-label">Skill 1</span> Pray — cura sé e i compagni<br>
+                <span class="cfc-label">Skill 2</span> Moon Shadow — abilità difensiva lunare<br>
+                <span class="cfc-label">Buff Lv.6</span> Pozioni di cura molto più efficaci<br>
+                <span class="cfc-label">🌟 Speciale</span> Indispensabile in Co-op. Sblocca Inter-dimension Traveler!
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header special">
+                <span class="cfc-name">🤖 Robot</span>
+                <span class="cfc-cost">Crafting (20 Parti + 20 Batterie)</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 3</span><span class="stat-pill shield">🛡️ 6</span><span class="stat-pill mana">💙 180</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Come sbloccarlo</span> Interagisci con il Robot Danneggiato nel Workshop usando l'Ingegnere<br>
+                <span class="cfc-label">Skill 1</span> EMP — disabilita nemici e distrugge proiettili<br>
+                <span class="cfc-label">Skill 2</span> Drone Swarm — sciame di droni attaccanti<br>
+                <span class="cfc-label">Buff Lv.6</span> Raggio laser più largo + immunità danni elettrici
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header special">
+                <span class="cfc-name">🏅 Ufficiale (Officer)</span>
+                <span class="cfc-cost">Achievement "Veteran Hunter"</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 6</span><span class="stat-pill shield">🛡️ 6</span><span class="stat-pill mana">💙 180</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Come sbloccarlo</span> Completa 10 incarichi dalla bacheca missioni<br>
+                <span class="cfc-label">Skill 1</span> Gun Spin — gira sparando in tutte le direzioni<br>
+                <span class="cfc-label">Skill 2</span> Bounty Tag — marca i nemici aumentando crit e drop monete<br>
+                <span class="cfc-label">Buff Lv.6</span> I nemici marcati lasciano più monete d'oro
+            </div>
+        </div>
+
+        <!-- Eroi a Pagamento -->
+        <h3 style="font-family:'Rajdhani',sans-serif;color:#fb923c;margin:22px 0 12px;font-size:1.15rem;">💳 Eroi a Pagamento</h3>
+
+        <div class="char-full-card">
+            <div class="cfc-header paid">
+                <span class="cfc-name">⚙️ Ingegnere</span>
+                <span class="cfc-cost">~$1.00</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 5</span><span class="stat-pill shield">🛡️ 5</span><span class="stat-pill mana">💙 180</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Laser di costruzione<br>
+                <span class="cfc-label">Skill 1</span> Armor Mount — evoca un'armatura meccanica guidabile con armi proprie<br>
+                <span class="cfc-label">Skill 2</span> Interceptor — drone intercettatore di proiettili<br>
+                <span class="cfc-label">Buff Lv.6</span> Il mount ripristina tutta l'armatura ai portali<br>
+                <span class="cfc-label">💡 Tip</span> Sblocca il Robot portando 20 Parti + 20 Batterie nel Workshop!
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header paid">
+                <span class="cfc-name">🧛 Vampiro</span>
+                <span class="cfc-cost">~$1.00</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 4</span><span class="stat-pill shield">🛡️ 4</span><span class="stat-pill mana">💙 200</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Denti (melee)<br>
+                <span class="cfc-label">Skill 1</span> Alien Swirl — assorbe vita/energia dai nemici<br>
+                <span class="cfc-label">Skill 2</span> Immortal — resuscita automaticamente una volta per run<br>
+                <span class="cfc-label">Buff Lv.6</span> Lifesteal aumentato, se HP è pieno ruba energia invece
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header paid">
+                <span class="cfc-name">🏰 Paladino</span>
+                <span class="cfc-cost">~$1.00</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 1</span><span class="stat-pill shield">🛡️ 8</span><span class="stat-pill mana">💙 120</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Spada e Scudo<br>
+                <span class="cfc-label">Skill 1</span> Holy Warrior — invincibilità + spada orbitante<br>
+                <span class="cfc-label">Skill 2</span> Splash & Bash — scudo esplosivo<br>
+                <span class="cfc-label">Buff Lv.6</span> Onda d'urto radiale automatica quando lo scudo subisce danni<br>
+                <span class="cfc-label">🌟 Speciale</span> Armatura più alta del gioco. Top S-tier in Badass!
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header paid">
+                <span class="cfc-name">🐺 Lupo Mannaro (Werewolf)</span>
+                <span class="cfc-cost">~$2.00</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 6</span><span class="stat-pill shield">🛡️ 3</span><span class="stat-pill mana">💙 180</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Artigli<br>
+                <span class="cfc-label">Skill 1</span> Berserk — trasformazione in lupo, danni aumentati al calare dell'HP<br>
+                <span class="cfc-label">Skill 2</span> Blood Thirst — combo di artigli che cura la vita<br>
+                <span class="cfc-label">Skill 3</span> Devour — attacca e cura HP (a 12.000 gemme extra)<br>
+                <span class="cfc-label">Buff Lv.6</span> Mentre in Berserk subisce solo ⅓ dei danni<br>
+                <span class="cfc-label">HP più alto del gioco</span> insieme a Berserker
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header paid">
+                <span class="cfc-name">🌿 Druido</span>
+                <span class="cfc-cost">~$2.00</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 5</span><span class="stat-pill shield">🛡️ 4</span><span class="stat-pill mana">💙 200</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Staff naturale<br>
+                <span class="cfc-label">Skill 1</span> Radici Velenose — radici che avvelenano e immobilizzano i nemici<br>
+                <span class="cfc-label">Skill 2</span> Vine — evoca liane attaccanti<br>
+                <span class="cfc-label">Buff Lv.6</span> Le piante crescono più forti e veloci
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header paid">
+                <span class="cfc-name">💪 Berserker</span>
+                <span class="cfc-cost">~$2.00</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 7</span><span class="stat-pill shield">🛡️ 2</span><span class="stat-pill mana">💙 160</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Ascia da guerra<br>
+                <span class="cfc-label">Skill 1</span> Free Style — catena di attacchi melee ad altissimo danno<br>
+                <span class="cfc-label">Skill 2</span> Leap — balzo verso i nemici con impatto<br>
+                <span class="cfc-label">Buff Lv.6</span> Attacchi melee hanno chance di generare proiettili<br>
+                <span class="cfc-label">⚠️ Nota</span> HP massimo del gioco, ma armatura bassissima. Alto rischio/ricompensa
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header paid">
+                <span class="cfc-name">💀 Necromante</span>
+                <span class="cfc-cost">~$2.00</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 4</span><span class="stat-pill shield">🛡️ 5</span><span class="stat-pill mana">💙 220</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Staff della morte<br>
+                <span class="cfc-label">Skill 1</span> Nightmare — attacco melee che riduce la DEF dei nemici<br>
+                <span class="cfc-label">Skill 2</span> Omen Stone — lancia pietra che evoca scheletri<br>
+                <span class="cfc-label">Skill 3</span> Souls Resurrect — resuscita nemici sconfitti come alleati<br>
+                <span class="cfc-label">Buff Lv.6</span> Gli scheletri evocati sono più potenti e resistenti<br>
+                <span class="cfc-label">🌟 Sblocca</span> Inter-dimension Traveler (personaggio segreto)!
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header paid">
+                <span class="cfc-name">📿 Taoista</span>
+                <span class="cfc-cost">~$2.00</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 4</span><span class="stat-pill shield">🛡️ 5</span><span class="stat-pill mana">💙 200</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Arma</span> Spada dello spirito<br>
+                <span class="cfc-label">Skill 1</span> Genesi delle Spade — evoca spade orbitanti<br>
+                <span class="cfc-label">Skill 2</span> Bagua — crea un campo che devia i proiettili<br>
+                <span class="cfc-label">Skill 3</span> Sword Fly — spade volanti ad inseguimento<br>
+                <span class="cfc-label">Buff Lv.6</span> Le spade evocate hanno danno e velocità aumentati
+            </div>
+        </div>
+
+        <!-- Eroi Segreti/Craftabili -->
+        <h3 style="font-family:'Rajdhani',sans-serif;color:#c4b5fd;margin:22px 0 12px;font-size:1.15rem;">🔮 Eroi Segreti (Crafting)</h3>
+        <div class="tip">
+            <div class="tip-label">🔮 Come sbloccare gli eroi segreti</div>
+            <p>Questi eroi si sbloccano portando un oggetto craftato (da Design Table) all'interno di una run. L'oggetto si costruisce combinando materiali speciali ottenuti dal pieno upgrade di altri eroi.</p>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header secret">
+                <span class="cfc-name">🌌 Viaggiatore Interdimensionale</span>
+                <span class="cfc-cost">Crafting: Guida al Viaggio Dimensionale</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 5</span><span class="stat-pill shield">🛡️ 4</span><span class="stat-pill mana">💙 200</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Requisiti</span> Libro del Pastore (Sacerdotessa Lv.8) + Libro della Resurrezione (Necromante Lv.8) → Design Table<br>
+                <span class="cfc-label">Buff Lv.6</span> Tutti i buff raccolti vengono potenziati ulteriormente
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header secret">
+                <span class="cfc-name">💎 Inviato degli Elementi</span>
+                <span class="cfc-cost">Crafting: Ambra dell'Eco</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 3</span><span class="stat-pill shield">🛡️ 4</span><span class="stat-pill mana">💙 260</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Requisiti</span> Cristalli Magici (Strega Lv.8) + Lacrima dell'Elfo (Elfo Lv.8) → Design Table<br>
+                <span class="cfc-label">Buff Lv.6</span> Immunità al fuoco + rigenerazione passiva dell'energia<br>
+                <span class="cfc-label">Energia più alta</span> insieme alla Strega: 260 base
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header secret">
+                <span class="cfc-name">⚔️ Decapitato (The Beheaded)</span>
+                <span class="cfc-cost">Crafting: Citoplasma</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 7</span><span class="stat-pill shield">🛡️ 2</span><span class="stat-pill mana">💙 180</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Requisiti</span> Da crafting avanzato (vedi wiki per dettagli specifici)<br>
+                <span class="cfc-label">Speciale</span> Arriva già al massimo livello di upgrade quando sbloccato<br>
+                <span class="cfc-label">Buff Lv.6</span> Gli attacchi a mani nude infliggono danni aggiuntivi<br>
+                <span class="cfc-label">🎮 Origine</span> Crossover con Dead Cells!
+            </div>
+        </div>
+
+        <!-- Altri Eroi Notevoli -->
+        <h3 style="font-family:'Rajdhani',sans-serif;color:var(--blue);margin:22px 0 12px;font-size:1.15rem;">✨ Altri Eroi Notevoli (Gemme)</h3>
+
+        <div class="char-full-card">
+            <div class="cfc-header free">
+                <span class="cfc-name">🌪️ Dominatore dell'Aria (Airbender)</span>
+                <span class="cfc-cost">Achievement speciale</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 4</span><span class="stat-pill shield">🛡️ 5</span><span class="stat-pill mana">💙 200</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Come sbloccarlo</span> Sconfiggi l'Airbender come nemico in <strong>The Origin Mode</strong> → achievement "No Discord No Concord" → si sblocca automaticamente nel roster. Gratis!<br>
+                <span class="cfc-label">Skill 1</span> Pulsating Blow — onda d'urto d'aria che respinge<br>
+                <span class="cfc-label">Skill 2</span> Orbiting Stars — stelle orbitanti che attaccano<br>
+                <span class="cfc-label">Buff Lv.6</span> L'onda d'aria distrugge i proiettili
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header free">
+                <span class="cfc-name">⛏️ Minatore</span>
+                <span class="cfc-cost">Gemme (aggiunto v5.0)</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 5</span><span class="stat-pill shield">🛡️ 5</span><span class="stat-pill mana">💙 180</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Skill 1</span> Underground Operations — scava tunnel per teleportarsi<br>
+                <span class="cfc-label">Skill 2</span> Cart Delivery — minecart che travolge i nemici<br>
+                <span class="cfc-label">Skill 3</span> Sandworm Storm — evoca vermi di sabbia attaccanti<br>
+                <span class="cfc-label">Buff Lv.6</span> I tunnel durano più a lungo e danneggiano i nemici
+            </div>
+        </div>
+
+        <div class="char-full-card">
+            <div class="cfc-header free">
+                <span class="cfc-name">🎭 Trap Master</span>
+                <span class="cfc-cost">Gemme (aggiunto v5.0)</span>
+            </div>
+            <div class="cfc-stats">
+                <span class="stat-pill hp">❤️ 4</span><span class="stat-pill shield">🛡️ 5</span><span class="stat-pill mana">💙 200</span>
+            </div>
+            <div class="cfc-info">
+                <span class="cfc-label">Skill 1</span> Telecontrolled Bomb — bomba teleguidata<br>
+                <span class="cfc-label">Skill 2</span> Master's Trick — piazza trappole nascoste<br>
+                <span class="cfc-label">Skill 3</span> Hat Trick — trappola cappello con effetti multipli<br>
+                <span class="cfc-label">Buff Lv.6</span> Le trappole esplodono con danno doppio
+            </div>
+        </div>
+
+    </section>
+
+    <!-- PET -->
+    <section id="pet" class="section">
+        <div class="section-header">
+            <h2>I Pet <span class="accent">Famigli</span></h2>
+            <p>Alleati immortali. Raggiunta 100% di Affinità sbloccano l'abilità unica.</p>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">🍖 Come aumentare l'Affinità</div>
+            <p>Nutri il tuo Pet nella lobby con armi specifiche. Il <strong>Pet Food</strong> funziona su qualsiasi pet e garantisce il massimo aumento — craftalo!</p>
+        </div>
+
+        <button class="collapse-btn" onclick="toggleCollapse(this)">🐾 Cibo per tipo di Pet <span class="arrow">▾</span></button>
+        <div class="collapse-body">
+            <ul>
+                <li><strong>Carne</strong> (Cani, Gatti, Lupi): armi <em>Meat</em> o <em>Bite</em></li>
+                <li><strong>Pesce</strong> (Gatti): armi <em>Fish</em> o <em>Laser Fish</em></li>
+                <li><strong>Vegetali</strong> (Maiali, Conigli): <em>Green Onions</em>, <em>Carrot</em></li>
+                <li><strong>Macchinari</strong> (Pet Robotici): Batterie, Parti meccaniche</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- GIOIELLI -->
+    <section id="gioielli" class="section">
+        <div class="section-header">
+            <h2>I <span class="accent">Gioielli</span></h2>
+            <p>Equipaggiamenti permanenti. Si craftano dallo Sciamano nell'Area Magica.</p>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">💎 Farming veloce</div>
+            <p>Gioca <strong>The Origin</strong>. I boss droppano Frammenti Enigmatici e Progetti in quantità.</p>
+        </div>
+
+        <div class="card">
+            <h3>💍 Anello di Giada</h3>
+            <p>Consumare mana può droppare cure. Ottimo per run aggressive ad alto consumo.</p>
+        </div>
+        <div class="card">
+            <h3>🐺 Amuleto del Morso di Lupo</h3>
+            <p>Usare l'abilità ti protegge e cura l'armatura. Ottima sinergia difensiva.</p>
+        </div>
+    </section>
+
+    <!-- ARMI -->
+    <section id="armi" class="section">
+        <div class="section-header">
+            <h2>Armi & <span class="accent">Statistiche</span></h2>
+            <p>Il gioco conta <strong>511 armi totali</strong>. Le statistiche sono: Danno | Costo Energia | % Critico | Imprecisione (più basso = più preciso).</p>
+        </div>
+
+        <!-- Come leggere le statistiche -->
+        <div class="card">
+            <h3>📊 Come Leggere le Statistiche</h3>
+            <ul>
+                <li><strong>Danno (ATK)</strong> — Danni per colpo. Il colpo critico raddoppia (o applica effetto elementale).</li>
+                <li><strong>Costo Energia</strong> — Energia consumata per ogni sparo. 0 = arma gratuita da usare!</li>
+                <li><strong>% Critico</strong> — Probabilità di colpo critico (si somma al crit base del personaggio).</li>
+                <li><strong>Imprecisione</strong> — Dispersione dei proiettili. 0 = perfettamente accurato.</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">🔴 ARMA LEGGENDARIA — Lo Scudo (Shield)</div>
+            <p>Arma rossa. Crea un campo di forza che distrugge <strong>TUTTI</strong> i proiettili nemici finché è attivo. Nessun danno al portatore. L'arma più potente del gioco in difesa. Usala come secondo slot e attivala quando sei sotto fuoco intenso.</p>
+        </div>
+
+        <!-- Rarità Armi -->
+        <div class="card">
+            <h3>🎨 Rarità e Colori</h3>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">
+                <span class="weapon-chip" style="border-color:#ccc;color:#ccc;">⬜ Bianca — Comune</span>
+                <span class="weapon-chip" style="border-color:#4ade80;color:#4ade80;">🟢 Verde — Non comune</span>
+                <span class="weapon-chip" style="border-color:#60a5fa;color:#60a5fa;">🔵 Blu — Rara</span>
+                <span class="weapon-chip" style="border-color:#a78bfa;color:#a78bfa;">🟣 Viola — Arcanica (Forge)</span>
+                <span class="weapon-chip" style="border-color:#fb923c;color:#fb923c;">🟠 Arancio — Epica</span>
+                <span class="weapon-chip" style="border-color:#e94560;color:#e94560;">🔴 Rossa — Leggendaria (speciale unico)</span>
+            </div>
+            <p style="font-size:.8rem;color:var(--muted);margin-top:10px;">⚠️ Le armi ROSSE non accettano attachment e hanno sempre un effetto speciale unico.</p>
+        </div>
+
+        <!-- PISTOLE -->
+        <h3 class="weapon-cat-title">🔫 Pistole & Fucili</h3>
+        <div class="weapon-table-wrap">
+            <table class="weapon-table">
+                <thead><tr><th>Arma</th><th>ATK</th><th>⚡</th><th>Crit%</th><th>Rarità</th><th>Note</th></tr></thead>
+                <tbody>
+                    <tr><td>Pistola</td><td>3</td><td>1</td><td>5%</td><td class="r-white">Bianca</td><td>Arma iniziale Cavaliere. Affidabile.</td></tr>
+                    <tr><td>AK-47</td><td>3</td><td>1</td><td>5%</td><td class="r-white">Bianca</td><td>Cadenza rapida, alta imprecisione (10).</td></tr>
+                    <tr><td>Fucile d'Assalto</td><td>3</td><td>1</td><td>5%</td><td class="r-green">Verde</td><td>Più accurato dell'AK. Buon all-rounder.</td></tr>
+                    <tr><td>Desert Eagle</td><td>8</td><td>2</td><td>10%</td><td class="r-blue">Blu</td><td>Alto danno singolo. Ottimo contro boss.</td></tr>
+                    <tr><td>Fucile da Cecchino</td><td>10</td><td>3</td><td>20%</td><td class="r-blue">Blu</td><td>Penetrante, crit alto. Lento ma devastante.</td></tr>
+                    <tr><td>Soul Calibre</td><td>16</td><td>5</td><td>10%</td><td class="r-orange">Epica</td><td>Proiettili penetranti, speed boost tenendo premuto. Crafting: 4 Batterie + 8 Ferriti + 8 Parti + 3 Frammenti Rossi + 150 💎</td></tr>
+                    <tr><td>Fucile Varkolyn</td><td>5</td><td>0</td><td>15%</td><td class="r-red">Leggendaria</td><td>⚡ Costo energia ZERO. Modalità fucile/pistola. S-tier assoluto per efficienza.</td></tr>
+                    <tr><td>Snow Fox Vintage</td><td>4</td><td>2</td><td>15%</td><td class="r-blue">Blu</td><td>Cadenza alta + ghiaccio. SMG top.</td></tr>
+                    <tr><td>Snow Fox XXXL</td><td>6</td><td>3</td><td>15%</td><td class="r-orange">Epica</td><td>Versione potenziata della Vintage. Congela tutto.</td></tr>
+                    <tr><td>Ranger's Revolver</td><td>10</td><td>2</td><td>30%</td><td class="r-orange">Epica</td><td>Crit altissimo. Ottimo con build critico.</td></tr>
+                    <tr><td>Dead Star Laser Gun</td><td>6</td><td>2</td><td>10%</td><td class="r-blue">Blu</td><td>Laser che taglia in linea retta. Pulisce stanze chiuse.</td></tr>
+                    <tr><td>Viper</td><td>5</td><td>2</td><td>20%</td><td class="r-orange">Epica</td><td>Proiettili si dividono in snake bullet inseguenti. Crit fino a 40 dmg con buff.</td></tr>
+                    <tr><td>Fucile Gatling Blu</td><td>4</td><td>1</td><td>5%</td><td class="r-blue">Blu</td><td>Fuoco rapidissimo. Danno sostenuto top.</td></tr>
+                    <tr><td>Mo Dao</td><td>—</td><td>0</td><td>25%</td><td class="r-red">Leggendaria</td><td>55 DPS. Laser melee potentissimo. Nessun consumo.</td></tr>
+                    <tr><td>Emperor's New Gun</td><td>20</td><td>4</td><td>0%</td><td class="r-orange">Epica</td><td>Danno enorme. Arma "invisibile" — nessuna grafica proiettile!</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SHOTGUN -->
+        <h3 class="weapon-cat-title">💥 Shotgun</h3>
+        <div class="weapon-table-wrap">
+            <table class="weapon-table">
+                <thead><tr><th>Arma</th><th>ATK</th><th>⚡</th><th>Crit%</th><th>Rarità</th><th>Note</th></tr></thead>
+                <tbody>
+                    <tr><td>Fucile a Pompa</td><td>4×5</td><td>2</td><td>5%</td><td class="r-white">Bianca</td><td>5 pallettoni. Ottima a corto raggio.</td></tr>
+                    <tr><td>Fucile a Pompa Doppio</td><td>4×8</td><td>3</td><td>5%</td><td class="r-green">Verde</td><td>8 pallettoni. Letale ravvicinato.</td></tr>
+                    <tr><td>Super Shotgun</td><td>6×8</td><td>4</td><td>10%</td><td class="r-blue">Blu</td><td>Devastante. Sinergia con buff Shotgun Pellets ++</td></tr>
+                    <tr><td>Laser Shotgun</td><td>8×6</td><td>5</td><td>10%</td><td class="r-orange">Epica</td><td>Pallettoni laser. Con buff raggio largo = pulizia stanze.</td></tr>
+                    <tr><td>Holy Gun</td><td>5×6</td><td>3</td><td>15%</td><td class="r-blue">Blu</td><td>Proiettili sacri che inseguono. Molto versatile.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ARMI MELEE -->
+        <h3 class="weapon-cat-title">⚔️ Armi Corpo a Corpo (Melee)</h3>
+        <div class="tip">
+            <div class="tip-label">🛡️ Perché il Melee è Fondamentale</div>
+            <p>Le armi melee consumano <strong>0 energia</strong> e i colpi fisici <strong>distruggono i proiettili nemici</strong>. Usale come scudo attivo in Badass Mode. Tienile sempre nel secondo slot!</p>
+        </div>
+        <div class="weapon-table-wrap">
+            <table class="weapon-table">
+                <thead><tr><th>Arma</th><th>ATK</th><th>⚡</th><th>Crit%</th><th>Rarità</th><th>Note</th></tr></thead>
+                <tbody>
+                    <tr><td>Spada</td><td>8</td><td>0</td><td>5%</td><td class="r-white">Bianca</td><td>Base dell'Assassino. Ampio arco d'attacco.</td></tr>
+                    <tr><td>Ascia</td><td>10</td><td>0</td><td>5%</td><td class="r-white">Bianca</td><td>Danno alto, più lenta della spada.</td></tr>
+                    <tr><td>Martello</td><td>12</td><td>0</td><td>5%</td><td class="r-green">Verde</td><td>Il più lento ma stordisce i nemici.</td></tr>
+                    <tr><td>Nunchaku</td><td>6</td><td>0</td><td>10%</td><td class="r-blue">Blu</td><td>⭐ VELOCISSIMO. Distrugge proiettili facilissimamente. S-tier difensivo.</td></tr>
+                    <tr><td>Spada Laser Blu</td><td>8</td><td>2</td><td>10%</td><td class="r-blue">Blu</td><td>Raggio d'attacco lungo. Efficace su più nemici.</td></tr>
+                    <tr><td>Spada Laser Verde</td><td>10</td><td>2</td><td>10%</td><td class="r-blue">Blu</td><td>Versione media. Buon equilibrio danno/raggio.</td></tr>
+                    <tr><td>Spada Laser d'Oro</td><td>14</td><td>3</td><td>15%</td><td class="r-orange">Epica</td><td>⭐ Attacco a 360°! Con Laser Buff S-tier assoluto. Pulisce stanze intere.</td></tr>
+                    <tr><td>Thunder Sword</td><td>12×3</td><td>0</td><td>15%</td><td class="r-orange">Epica</td><td>3 swing. Il 3° swing lancia 10 fulmini a catena. Crafting: Frost Sword + Flame Sword</td></tr>
+                    <tr><td>Mazza d'Oro</td><td>15</td><td>0</td><td>10%</td><td class="r-orange">Epica</td><td>Stordisce sempre. Ottima contro boss.</td></tr>
+                    <tr><td>Meat (Carne)</td><td>1</td><td>0</td><td>10%</td><td class="r-green">Verde</td><td>ATK basso ma velocità d'attacco altissima. Devia quasi tutti i proiettili. Top difensivo.</td></tr>
+                    <tr><td>Deep Dark Blades</td><td>10</td><td>0</td><td>25%</td><td class="r-orange">Epica</td><td>Crit altissimo, stordisce i nemici. Eccellente contro boss.</td></tr>
+                    <tr><td>Crystal Crab Katana</td><td>8</td><td>0</td><td>20%</td><td class="r-blue">Blu</td><td>Crea cristalli che danneggiano i nemici in area. Sinergia con molti buff.</td></tr>
+                    <tr><td>Esecutore (Executioner)</td><td>13</td><td>0</td><td>5%</td><td class="r-blue">Blu</td><td>Tap rapido = DPS simile al Nunchaku. Eccellente in Badass.</td></tr>
+                    <tr><td>Sacred Sword (riforgiata)</td><td>12</td><td>0</td><td>20%</td><td class="r-red">Leggendaria</td><td>Con abilità del Cavaliere (skill 1) + Trumpet = combo devastante.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ARCHI -->
+        <h3 class="weapon-cat-title">🏹 Archi</h3>
+        <div class="weapon-table-wrap">
+            <table class="weapon-table">
+                <thead><tr><th>Arma</th><th>ATK</th><th>⚡</th><th>Crit%</th><th>Rarità</th><th>Note</th></tr></thead>
+                <tbody>
+                    <tr><td>Arco</td><td>4–8</td><td>2</td><td>10%</td><td class="r-white">Bianca</td><td>Carica per più danno. Base dell'Elfo.</td></tr>
+                    <tr><td>Frost Bow</td><td>5–10</td><td>2</td><td>10%</td><td class="r-green">Verde</td><td>Congela al critico. Elementale ghiaccio.</td></tr>
+                    <tr><td>Flame Bow</td><td>5–12</td><td>2</td><td>10%</td><td class="r-green">Verde</td><td>Brucia al critico. Elementale fuoco.</td></tr>
+                    <tr><td>Jade Bow</td><td>5–10</td><td>2</td><td>15%</td><td class="r-blue">Blu</td><td>Veleno al critico. Buona cadenza.</td></tr>
+                    <tr><td>Star Bow (Arco Stellare)</td><td>8–18</td><td>3</td><td>20%</td><td class="r-orange">Epica</td><td>⭐ Penetrante + esplosione laser all'impatto. Crafting: Frost Bow + Jade Bow + Flame Bow. S-tier.</td></tr>
+                    <tr><td>Windforce</td><td>6–14</td><td>3</td><td>15%</td><td class="r-orange">Epica</td><td>Mirino automatico (aimbot). Punta da sola il nemico più vicino.</td></tr>
+                    <tr><td>Snow Ape Bow</td><td>7–15</td><td>3</td><td>20%</td><td class="r-orange">Epica</td><td>Scimmia di neve che attacca autonomamente dopo il tiro.</td></tr>
+                    <tr><td>Arco Magico</td><td>6–20</td><td>4</td><td>25%</td><td class="r-red">Leggendaria</td><td>Danno massiccio caricato. Frecce elementali multiple. S-tier puro DPS.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- STAFF MAGICI -->
+        <h3 class="weapon-cat-title">🪄 Staff Magici</h3>
+        <div class="weapon-table-wrap">
+            <table class="weapon-table">
+                <thead><tr><th>Arma</th><th>ATK</th><th>⚡</th><th>Crit%</th><th>Rarità</th><th>Note</th></tr></thead>
+                <tbody>
+                    <tr><td>Staff della Strega</td><td>4</td><td>2</td><td>15%</td><td class="r-white">Bianca</td><td>Arma iniziale Strega. 3 proiettili magici.</td></tr>
+                    <tr><td>Grand Wizard Staff</td><td>6</td><td>3</td><td>20%</td><td class="r-blue">Blu</td><td>AoE enorme + congelamento. Efficace su gruppi.</td></tr>
+                    <tr><td>Staff of Anubis</td><td>0</td><td>0</td><td>0%</td><td class="r-red">Leggendaria</td><td>Non attacca direttamente: genera cristalli che espandono l'area del dungeon. Utility unica.</td></tr>
+                    <tr><td>Staff of Skeleton</td><td>0</td><td>5</td><td>0%</td><td class="r-blue">Blu</td><td>Evoca scheletri combattenti. DPS indiretto alto.</td></tr>
+                    <tr><td>Nirvana Cross</td><td>0</td><td>0</td><td>0%</td><td class="r-orange">Epica</td><td>Non attacca. Ricarica tutta l'energia. Utility top — abbinalo a un'arma potente.</td></tr>
+                    <tr><td>Thunder Staff</td><td>8</td><td>3</td><td>10%</td><td class="r-blue">Blu</td><td>Fulmini che rimbalzano tra i nemici. Letale nelle stanze affollate.</td></tr>
+                    <tr><td>Vampire Staff</td><td>5</td><td>2</td><td>10%</td><td class="r-blue">Blu</td><td>Ruba vita ai nemici colpiti. Ottima con Vampiro.</td></tr>
+                    <tr><td>Staff of Wizard</td><td>3</td><td>1</td><td>85%</td><td class="r-orange">Epica</td><td>Crit quasi garantito. Con Book Pile upgrade = 95% crit. S-tier con Strega Lv.6.</td></tr>
+                    <tr><td>Serenity (arma unica)</td><td>dipende armatura</td><td>dipende armatura</td><td>garantito se armatura piena</td><td class="r-red">Leggendaria</td><td>Il danno = armatura attuale × 10. Costo energia = armatura attuale. Se armatura piena, crit garantito. Meccanica unica!</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ARMI SPECIALI -->
+        <h3 class="weapon-cat-title">✨ Armi Speciali & Craftabili</h3>
+        <div class="weapon-table-wrap">
+            <table class="weapon-table">
+                <thead><tr><th>Arma</th><th>ATK</th><th>⚡</th><th>Crit%</th><th>Come Ottenerla</th></tr></thead>
+                <tbody>
+                    <tr><td>Thunder Sword</td><td>12×3</td><td>0</td><td>15%</td><td>Fusione: Frost Sword + Flame Sword (Forge)</td></tr>
+                    <tr><td>Star Bow</td><td>8–18</td><td>3</td><td>20%</td><td>Fusione: Frost Bow + Jade Bow + Flame Bow</td></tr>
+                    <tr><td>Soul Calibre</td><td>16</td><td>5</td><td>10%</td><td>Crafting: 4 Batt. + 8 Ferriti + 8 Parti + 3 Frammenti Rossi + 150💎</td></tr>
+                    <tr><td>Nirvana Cross</td><td>0</td><td>0</td><td>0%</td><td>Design Table (progetto raro)</td></tr>
+                    <tr><td>Golden Laser Sword</td><td>14</td><td>3</td><td>15%</td><td>Design Table + materiali dorati</td></tr>
+                    <tr><td>Shield (Lo Scudo)</td><td>0</td><td>0</td><td>0%</td><td>Drop raro dal Paladino NPC / boss leggendari</td></tr>
+                    <tr><td>Zeus Thunderbolt</td><td>8+catena</td><td>2</td><td>20%</td><td>Drop dai boss / casse dorate</td></tr>
+                    <tr><td>Groundwater</td><td>3×∞</td><td>1</td><td>5%</td><td>Raro drop — Lascia sorgenti d'acqua che danneggiano i nemici in loop.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- TIER LIST FINALE -->
+        <h3 class="weapon-cat-title">🏆 Tier List Finale (Badass Mode)</h3>
+        <div class="tier-block">
+            <span class="tier-label s">🥇 Tier S</span>
+            <div class="weapon-chips">
+                <span class="weapon-chip">🔴 Shield</span>
+                <span class="weapon-chip">⚡ Spada Laser Oro</span>
+                <span class="weapon-chip">🏹 Arco Stellare</span>
+                <span class="weapon-chip">🌀 Nunchaku</span>
+                <span class="weapon-chip">🔫 Fucile Varkolyn</span>
+                <span class="weapon-chip">✨ Staff of Wizard</span>
+                <span class="weapon-chip">⚔️ Thunder Sword</span>
+            </div>
+        </div>
+        <div class="tier-block">
+            <span class="tier-label a">🥈 Tier A</span>
+            <div class="weapon-chips">
+                <span class="weapon-chip">💀 Soul Calibre</span>
+                <span class="weapon-chip">🏹 Windforce</span>
+                <span class="weapon-chip">🔱 Deep Dark Blades</span>
+                <span class="weapon-chip">🐍 Viper</span>
+                <span class="weapon-chip">🔵 Gatling Blu</span>
+                <span class="weapon-chip">🦅 Ranger's Revolver</span>
+                <span class="weapon-chip">⚡ Thunder Staff</span>
+                <span class="weapon-chip">🌿 Meat</span>
+            </div>
+        </div>
+        <div class="tier-block">
+            <span class="tier-label b">🥉 Tier B</span>
+            <div class="weapon-chips">
+                <span class="weapon-chip">🔫 Desert Eagle</span>
+                <span class="weapon-chip">🔵 Snow Fox Vintage</span>
+                <span class="weapon-chip">💥 Super Shotgun</span>
+                <span class="weapon-chip">🎯 Cecchino</span>
+                <span class="weapon-chip">🏹 Snow Ape Bow</span>
+                <span class="weapon-chip">🔨 Mazza d'Oro</span>
+                <span class="weapon-chip">💎 Crystal Crab Katana</span>
+            </div>
+        </div>
+
+        <!-- Consigli Armi -->
+        <div class="card" style="margin-top:14px;">
+            <h3>💡 Regole d'Oro per le Armi</h3>
+            <ul>
+                <li><strong>Tieni sempre un melee nel secondo slot</strong> — salva energia e blocca proiettili.</li>
+                <li><strong>Non scartare la Nirvana Cross</strong> — ricaricare tutta l'energia mid-boss è immenso.</li>
+                <li><strong>Le armi rosse non accettano pezzi (attachment)</strong> — usale così come sono.</li>
+                <li><strong>Armi Arcane (viola)</strong> — si sbloccano trovandola 2-8 volte nel dungeon, poi puoi forgiarla.</li>
+                <li><strong>Stesso tipo di arma due volte</strong> — alcune armi si fondono se le prendi due volte (es. 2× Arco = Windforce!).</li>
+                <li><strong>Reforging Furnace</strong> — puoi "riforgiare" un'arma per cambiarla in una dello stesso tipo ma di qualità migliore (consuma materiali).</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- MERCENARI -->
+    <section id="mercenari" class="section">
+        <div class="section-header">
+            <h2>Mercenari & <span class="accent">NPC</span></h2>
+            <p>Pagali con monete d'oro. Lascia cadere un'arma per potenziarli.</p>
+        </div>
+
+        <div class="card">
+            <h3>🏇 Cavaliere</h3>
+            <p>Preferisce <strong>Pistole</strong> e <strong>Fucili a pompa</strong>.</p>
+        </div>
+        <div class="card">
+            <h3>💪 Barbaro</h3>
+            <p>Ama <strong>Spade</strong> e <strong>Asce</strong>. Dagli una Spada Laser per il massimo!</p>
+        </div>
+        <div class="card">
+            <h3>🧙 Mago</h3>
+            <p>Usa solo <strong>Bastoni Magici</strong>.</p>
+        </div>
+    </section>
+
+    <!-- MODALITÀ -->
+    <section id="modalita" class="section">
+        <div class="section-header">
+            <h2>Modalità di <span class="accent">Gioco</span></h2>
+            <p>Ogni modalità ha ricompense, strategie e personaggi ottimali diversi.</p>
+        </div>
+
+        <!-- LEVEL MODE -->
+        <div class="mode-card origin" style="border-color:#e2e8f0;">
+            <h3 style="color:#e2e8f0;">🗺️ Level Mode (Campagna Standard)</h3>
+            <p style="color:var(--muted);">3 piani × 5 livelli. Boss ai livelli X-5. La modalità base del gioco.</p>
+        </div>
+        <div class="card">
+            <h3>📋 Struttura dei Livelli</h3>
+            <ul>
+                <li><strong>Piano 1</strong> (Lv 1-1 → 1-5): Dungeon di pietra. Boss: Varkolyn Leader o Baby Dragon Bros.</li>
+                <li><strong>Piano 2</strong> (Lv 2-1 → 2-5): Dungeon di lava. Boss: Volcanic Sandworm o Ancient Guardian.</li>
+                <li><strong>Piano 3</strong> (Lv 3-1 → 3-5): Dungeon tecnologico. Boss: Colossus Julan o Dragon Bros Pro. Il più difficile!</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🎯 Consigli per Level Mode</h3>
+            <ul>
+                <li>Priorità: raccogli quante più <strong>monete</strong> possibile → compra armi al mercante nei livelli X-4 prima del boss.</li>
+                <li>Al livello <strong>X-3 o X-4</strong> cerca sempre il mercante: è il momento migliore per fare upgrade arma.</li>
+                <li>I <strong>livelli pari</strong> (X-2, X-4) tendono ad avere più stanze speciali (❗). Esplorali tutti!</li>
+                <li>Conserva le <strong>bombe</strong> per i boss — infliggono danni fissi indipendenti dalla difesa.</li>
+                <li>Nei <strong>corridoi stretti</strong> del Piano 2 usa armi con proiettili rimbalzanti o penetranti.</li>
+                <li>Al Piano 3 il pavimento spesso ha <strong>trappole a spuntoni</strong>: con immunità trappole dal Giardino (Cactus) le ignori.</li>
+            </ul>
+        </div>
+
+        <!-- BADASS MODE -->
+        <div class="mode-card badass" style="margin-top:20px;">
+            <h3>💀 Badass Mode</h3>
+            <p>La stessa campagna ma con <strong>-1 difesa</strong> su tutti i danni. Boss sempre Champion. Più nemici Elite. Il certificato di completamento è dorato.</p>
+        </div>
+        <div class="tip">
+            <div class="tip-label">🔓 Come sbloccarla</div>
+            <p>Completa tutti gli upgrade della Lobby, raggiungi il livello 4-6 nella run, poi interagisci con la <strong>Pietra Magica</strong>. Il Badass Travel spawna nella Lobby.</p>
+        </div>
+        <div class="card">
+            <h3>⭐ Personaggi Migliori in Badass</h3>
+            <ul>
+                <li><strong>🏆 Paladino (Skill 1)</strong> — 8 scudo base, l'onda d'urto riduce danno subito. Il più solido in assoluto.</li>
+                <li><strong>🗡️ Assassino</strong> — Invisibilità salva la vita. Il melee che devia proiettili è fondamentale.</li>
+                <li><strong>🥷 Rogue (Furfante)</strong> — Il roll-dodge ogni 2 sec è la migliore difesa mobile. I crit trapassanti fanno da.</li>
+                <li><strong>⚗️ Alchimista</strong> — Immunità veleno + danno veleno. Solide stat bilanciate.</li>
+                <li><strong>🏇 Cavaliere (Lv.6+)</strong> — Versatile, dipende dall'arma. Il passive buff è fortissimo.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🛡️ Strategia Core per Badass</h3>
+            <ul>
+                <li><strong>Il Latte è TUTTO</strong> — Compralo sempre dal distributore nella Lobby. Annulla il -1 difesa = danni normali.</li>
+                <li><strong>Armor Mount dell'Ingegnere</strong> — Il Mount aggiunge +1 difesa extra → con Latte prendi 0 danni dalla maggior parte degli attacchi!</li>
+                <li><strong>Melee nel 2° slot sempre</strong> — In Badass ogni proiettile fa molto di più. Il Nunchaku o Meat sono scudi attivi essenziali.</li>
+                <li><strong>Statua del Cavaliere/Paladino</strong> — Alleati aggiuntivi che assorbono proiettili per te.</li>
+                <li><strong>D-Pad fisso nelle impostazioni</strong> — Più controllo preciso nei movimenti di schivata.</li>
+                <li><strong>Buff Scudo Forte</strong> — Il danno in eccesso rispetto all'armatura NON si trasferisce alla salute. Priorità assoluta!</li>
+                <li><strong>Evita le Champion Room</strong> — In Badass gli elite sono troppo pericolosi. Skip se non sei a piena salute.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🚫 Cosa NON fare in Badass</h3>
+            <ul>
+                <li>Non usare il <strong>Berserker o Lupo Mannaro</strong> se non sei molto esperto — il loro stile aggressivo è pericoloso quando ogni colpo fa +1 danno.</li>
+                <li>Non comprare dal <strong>Mercante Misterioso</strong> se hai poca salute — costa 1 HP che non si recupera facilmente.</li>
+                <li>Non ignorare le <strong>botti esplosive rosse</strong> — in Badass esplodono anche per te!</li>
+                <li>Non portare solo armi a distanza — senza melee sei esposto a tutti i proiettili.</li>
+            </ul>
+        </div>
+
+        <!-- BOSS RUSH -->
+        <div class="mode-card boss" style="margin-top:20px;">
+            <h3>👑 Boss Rush Mode</h3>
+            <p>Affonti tutti i boss in sequenza senza stanze intermedie. Ottima fonte di <strong>Progetti</strong> e materiali rari dai boss.</p>
+        </div>
+        <div class="card">
+            <h3>⚡ Personaggi Migliori in Boss Rush</h3>
+            <ul>
+                <li><strong>💀 Necromante</strong> — Gli scheletri evocati fanno da tank e DPS simultaneamente.</li>
+                <li><strong>🏇 Cavaliere (skill 1 potenziata)</strong> — Doppio fuoco + skill potenziata = DPS burst altissimo sui boss.</li>
+                <li><strong>🌌 Viaggiatore Interdimensionale</strong> — Ogni buff raccolto viene amplificato → scala rapidamente.</li>
+                <li><strong>⚗️ Alchimista</strong> — Le pozioni applicate ai boss fanno danni elevati nel tempo.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🎯 Strategia Boss Rush</h3>
+            <ul>
+                <li>Scegli armi con <strong>alto DPS singolo</strong>: Soul Calibre, Ranger's Revolver, Arco Stellare.</li>
+                <li>I Boss Rush <strong>non spawnano mercanti</strong> — affidati a quello che trovi nelle casse tra un boss e l'altro.</li>
+                <li>Le bombe sono ancora più preziose qui — usale quando il boss entra in fase 2.</li>
+                <li>Priorità buff: <strong>Critico > Danno da Critico > Penetrazione</strong> per maximizzare burst DPS.</li>
+                <li>Il <strong>Necromante</strong> brilla perché gli scheletri continuano a fare danno mentre tu schivi i pattern di attacco.</li>
+                <li>Non appare in Boss Rush la <strong>Matrix Room</strong> — non puoi farmare gemme qui.</li>
+            </ul>
+        </div>
+
+        <!-- THE ORIGIN -->
+        <div class="mode-card origin" style="margin-top:20px;">
+            <h3>🌀 The Origin (L'Origine)</h3>
+            <p>Tower Defense. Difendi il Cristallo dall'invasione di ondate nemiche costruendo torrette. Miglior fonte di <strong>monete, gioielli e frammenti enigmatici</strong>.</p>
+        </div>
+        <div class="card">
+            <h3>🏗️ Come Funziona</h3>
+            <ul>
+                <li>Hai <strong>10 slot buff</strong> (invece di 7). Le ondate arrivano da direzioni multiple.</li>
+                <li>Costruisci <strong>torrette</strong> con le monete guadagnate — posizionale agli incroci e nei corridoi stretti.</li>
+                <li>I boss qui droppano <strong>Frammenti Enigmatici</strong> e <strong>Progetti Gioielli</strong> in grandi quantità.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>⭐ Personaggi Migliori in The Origin</h3>
+            <ul>
+                <li><strong>⚙️ Ingegnere</strong> — Le sue torrette si sommano a quelle costruibili. Assoluto dominatore.</li>
+                <li><strong>🎭 Trap Master</strong> — Trappole ovunque = ondate sventrate automaticamente.</li>
+                <li><strong>🧙 Strega</strong> — Alta energia: può usare le armi AoE (Grand Wizard Staff) senza fermarsi mai.</li>
+                <li><strong>🙏 Sacerdotessa</strong> — In co-op cura i compagni, permettendo run molto più lunghe.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🎯 Strategia The Origin</h3>
+            <ul>
+                <li>Posiziona le torrette <strong>ai colli di bottiglia</strong> — punti stretti dove i nemici si raggruppano.</li>
+                <li>Usa armi AoE (shotgun, staff AoE, thunder) per pulire rapidamente le ondate.</li>
+                <li><strong>Non trascurare il Cristallo</strong>: se i nemici lo raggiungono, ogni colpo lo danneggia permanentemente.</li>
+                <li>Nella fase avanzata, dai priorità ai <strong>nemici volanti</strong> — ignorano le torrette a terra.</li>
+                <li>Con l'Ingegnere, piazza il Mount nelle corsie principali: funge da torretta mobile.</li>
+            </ul>
+        </div>
+
+        <!-- LA MATRICE -->
+        <div class="mode-card matrix" style="margin-top:20px;">
+            <h3>♾️ La Matrice (Matrix Mode)</h3>
+            <p>Modalità infinita. Il danno delle armi <strong>cala progressivamente</strong> se non le cambi. Fino a <strong>38 slot buff</strong>. Perfetta per farmare Gemme.</p>
+        </div>
+        <div class="card">
+            <h3>🔄 Meccanica Core: Il Cambio Arma</h3>
+            <p>In Matrix Mode ogni arma ha un <strong>contatore di efficacia</strong>. Più la usi, meno danno fa. Devi continuamente cambiare arma per mantenere l'output. Raccogliere nuove armi resetta il contatore. La strategia è avere sempre nuove armi disponibili!</p>
+        </div>
+        <div class="card">
+            <h3>⭐ Personaggi Migliori in Matrix</h3>
+            <ul>
+                <li><strong>🏇 Cavaliere</strong> — Skill 1 si applica a tutte le armi → ideale per sfruttare il cambio arma.</li>
+                <li><strong>🗡️ Furfante</strong> — Con 38 slot buff i crit trapassanti diventano assurdi.</li>
+                <li><strong>🌌 Viaggiatore Interdimensionale</strong> — I buff amplificati × 38 slot = scaling infinito.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>💎 Farming Gemme in Matrix</h3>
+            <ul>
+                <li>Concentrati sul <strong>sopravvivere il più a lungo possibile</strong> — le gemme si accumulano con le uccisioni.</li>
+                <li>Priorità buff: <strong>sopravvivenza prima</strong> (Scudo Forte, Rigenerazione Armatura), poi DPS.</li>
+                <li>Con 38 buff disponibili puoi costruire <strong>combo impossibili</strong> nella campagna standard.</li>
+                <li>Non esiste fine — il tuo obiettivo è battere il tuo record personale di livelli sopravvissuti.</li>
+                <li>Il <strong>Pozzo dei Desideri</strong> qui è fondamentale: continuare a prendere Buff Bubble aggiuntivi.</li>
+            </ul>
+        </div>
+
+        <!-- CO-OP MULTIPLAYER -->
+        <div class="mode-card" style="background:rgba(245,158,11,.08);border-color:#f59e0b;margin-top:20px;">
+            <h3 style="color:#f59e0b;">👥 Co-op Multiplayer (2-4 Giocatori)</h3>
+            <p>Fino a 4 giocatori online o in locale. Ogni giocatore mantiene il suo loot. I boss hanno più HP scalati.</p>
+        </div>
+        <div class="card">
+            <h3>🤝 Ruoli in Co-op</h3>
+            <ul>
+                <li><strong>🙏 Sacerdotessa</strong> — Healer del gruppo. Indispensabile in Badass co-op.</li>
+                <li><strong>⚙️ Ingegnere</strong> — Torrette = difesa passiva per il team.</li>
+                <li><strong>💀 Necromante</strong> — Gli scheletri fanno tank per tutti.</li>
+                <li><strong>🥷 Rogue/Assassino</strong> — DPS puro. Sfrutti la protezione dei compagni per fare danni.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>💡 Regole Co-op</h3>
+            <ul>
+                <li>Le armi droppate sono condivise — comunicati con i compagni!</li>
+                <li>Se un giocatore muore, gli altri possono <strong>resuscitarlo</strong> tenendo premuto vicino al corpo.</li>
+                <li>I <strong>mercenari</strong> seguono il giocatore che li ha ingaggiati.</li>
+                <li>Le stanze Champion (!) in co-op danno ricompense più ricche ma i nemici hanno HP aumentati per il numero di giocatori.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- GIARDINO -->
+    <section id="giardino" class="section">
+        <div class="section-header">
+            <h2>Il <span class="accent">Giardino</span></h2>
+            <p>Pianta semi dei Boss per buff permanenti prima della run.</p>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">🌿 Meta del Giardino</div>
+            <p>Pianta <strong>solo semi permanenti dei Boss</strong>. Otterrai buff enormi prima ancora di iniziare!</p>
+        </div>
+
+        <div class="card">
+            <h3>🌱 Semi & Buff</h3>
+            <ul>
+                <li><strong>Mandragora</strong> (Varkolyn Leader) — Immunità al Veleno</li>
+                <li><strong>Albero del Drago di Fuoco</strong> (Baby Dragon Bros) — Immunità al Fuoco</li>
+                <li><strong>Fungo Bruco</strong> (Volcanic Sandworm) — Salute Max +4</li>
+                <li><strong>Cactus</strong> (Treant) — Immunità a Trappole e Collisioni</li>
+                <li><strong>Fiore Sentinella</strong> (Boss) — Nessun danno extra quando lo scudo si rompe</li>
+                <li><strong>Bambù ♾️</strong> — Raccolta: ottieni l'arma "Bamboo"</li>
+                <li><strong>Albero dei Gioielli</strong> — Raccolta: 222 Gemme</li>
+                <li><strong>Fiore Magico</strong> — Vampirismo Energia (recuperi energia uccidendo)</li>
+                <li><strong>Trappola del Diavolo</strong> (7 giorni, raro) — Ottieni un <strong>Pet Boss</strong> da portare nel dungeon!</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">🌿 Pianta della Lobby (Speed Boost)</div>
+            <p>La <strong>pianta decorativa nella Lobby</strong> può essere potenziata. Al massimo livello aumenta la velocità di movimento di <strong>+1</strong> (da +0.2 per livello). Vale l'investimento a lungo termine!</p>
+        </div>
+    </section>
+
+    <!-- LOBBY -->
+    <section id="lobby" class="section">
+        <div class="section-header">
+            <h2>La <span class="accent">Lobby</span></h2>
+            <p>Ottimizza ogni run dalla tua base.</p>
+        </div>
+
+        <div class="lobby-grid">
+            <div class="lobby-item">
+                <div class="li-icon">📺</div>
+                <div class="li-name">Televisione</div>
+                <div class="li-desc">Guarda pubblicità per Gemme gratis.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🔒</div>
+                <div class="li-name">Cassaforte</div>
+                <div class="li-desc">Aumenta monete di partenza (max +10).</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🎲</div>
+                <div class="li-name">Gashapon</div>
+                <div class="li-desc">Drop casuale: armi, materiali, semi, bombe.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🐟</div>
+                <div class="li-name">Acquario</div>
+                <div class="li-desc">Può droppare armi a forma di pesce.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🥛</div>
+                <div class="li-name">Distributore</div>
+                <div class="li-desc"><strong>Il Latte</strong> è il best — danni -1!</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🗿</div>
+                <div class="li-name">Statua Sacra</div>
+                <div class="li-desc">300 Gemme per effetto casuale pre-run.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAPPA E STANZE -->
+    <section id="mappa" class="section">
+        <div class="section-header">
+            <h2>Mappa & <span class="accent">Stanze</span></h2>
+            <p>Leggi la minimappa per navigare il dungeon in modo ottimale.</p>
+        </div>
+
+        <div class="card">
+            <h3>🗺️ Icone della Minimappa</h3>
+            <ul>
+                <li><strong>⚔️ Stanza Nemici</strong> — Elimina tutti i nemici per aprire le porte.</li>
+                <li><strong>🚪 Ingresso</strong> — Punto di partenza del livello, con eventuale NPC o distributore.</li>
+                <li><strong>➡️ Portale</strong> — Il portale per il livello successivo.</li>
+                <li><strong>💀 Boss Room</strong> — Boss al livello X-5. Preparati prima di entrare!</li>
+                <li><strong>📦 Stanza Casse</strong> — Contiene un forziere, un Chester o il Mercante Misterioso.</li>
+                <li><strong>❗ Stanza Speciale</strong> — Può contenere Champion Room, NPC speciali, o Statua.</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">💡 Champion Room (!!) — Rischio/Ricompensa</div>
+            <p>Le stanze con <strong>doppio punto esclamativo</strong> e porte rosse contengono nemici Elite molto più forti. Se le superi, spawnano casse verdi con materiali preziosi. Da evitare se sei basso di salute!</p>
+        </div>
+
+        <div class="card">
+            <h3>🏺 Oggetti nell'Ambiente</h3>
+            <ul>
+                <li><strong>Botte Rossa 🔴</strong> — Esplode se colpita. Usala contro i nemici!</li>
+                <li><strong>Botte Blu 🔵</strong> — Esplode sparando 12 punte di ghiaccio in ogni direzione.</li>
+                <li><strong>Botte Verde 🟢</strong> — Crea una pozza di veleno.</li>
+                <li><strong>Botte Bianca ⬜</strong> — Lancia 4 coltelli quando si rompe.</li>
+                <li><strong>Piastra Blu</strong> — Cambia la velocità di movimento temporaneamente.</li>
+                <li><strong>Piastra Verde</strong> — Ti rallenta. Da evitare in combattimento!</li>
+                <li><strong>Cassa di Legno 📦</strong> — Rompila per ottenere 16 energia e 2 monete.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🏪 Tipi di Mercanti</h3>
+            <ul>
+                <li><strong>Mercante Standard</strong> — Vende armi e pozioni per monete d'oro.</li>
+                <li><strong>Mercante Misterioso</strong> — Vende oggetti rari (Buff Bubble) in cambio di <strong>1 punto salute</strong>!</li>
+                <li><strong>Mercante Amichevole</strong> — Prezzi ridotti, ottimo se hai molte monete.</li>
+                <li><strong>Mercante Furbo</strong> — Può chiedere monete o salute. Valuta attentamente.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- CASSE E FORZIERI -->
+    <section id="casse" class="section">
+        <div class="section-header">
+            <h2>Casse & <span class="accent">Forzieri</span></h2>
+            <p>Non tutte le casse sono uguali. Impara a distinguerle!</p>
+        </div>
+
+        <div class="lobby-grid">
+            <div class="lobby-item">
+                <div class="li-icon">⬜</div>
+                <div class="li-name">Cassa Bianca</div>
+                <div class="li-desc">Arma comune. Si trova in molte stanze normali.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🟤</div>
+                <div class="li-name">Cassa Marrone</div>
+                <div class="li-desc">Arma non comune. Qualità migliore della bianca.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🔵</div>
+                <div class="li-name">Cassa Blu</div>
+                <div class="li-desc">Arma rara. Ottima qualità. Spesso dai boss.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🟡</div>
+                <div class="li-name">Cassa Dorata</div>
+                <div class="li-desc">Arma epica/leggendaria. Le migliori del gioco!</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🟢</div>
+                <div class="li-name">Cassa Verde</div>
+                <div class="li-desc">NON contiene armi! Dà materiali, semi e progetti.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">👾</div>
+                <div class="li-name">Chester</div>
+                <div class="li-desc">Cassa travestita da nemico! Uccidila per aprirla.</div>
+            </div>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">📦 Cassa Meccanica (Turret Room)</div>
+            <p>Scegli un oggetto tra 2-4 opzioni. Le altre si trasformano in <strong>torrette nemiche</strong>. Se c'è una sola opzione, è più facile da gestire. Con più opzioni il rischio aumenta drasticamente!</p>
+        </div>
+    </section>
+
+    <!-- BUFF -->
+    <section id="buff" class="section">
+        <div class="section-header">
+            <h2>I <span class="accent">Buff</span></h2>
+            <p>Scelti tra i livelli, potenziano le tue run. In Level Mode hai 7 slot disponibili.</p>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">🎯 Come funzionano i Buff Slot</div>
+            <p>In <strong>Level Mode e Boss Rush</strong>: 7 slot. In <strong>Matrix Mode</strong>: fino a 38! In <strong>The Origin</strong>: 10 slot. Puoi guadagnare slot extra con il buff "Eccezionalmente Talentuoso" o bevendo Tè. Il Buff Passivo del personaggio (liv. 6) occupa sempre il primo slot.</p>
+        </div>
+
+        <h3 style="font-family:'Rajdhani',sans-serif; color:var(--blue); margin: 16px 0 10px; font-size:1.1rem;">🏆 Buff Essenziali</h3>
+
+        <div class="card">
+            <h3>⚡ Offensivi</h3>
+            <ul>
+                <li><strong>Critico:</strong> Aumenta la probabilità di colpi critici (danno doppio).</li>
+                <li><strong>Danno da Critico:</strong> I critici infliggono 300% del danno normale.</li>
+                <li><strong>Fuoco Rapido:</strong> Aumenta la velocità di attacco delle armi da fuoco.</li>
+                <li><strong>Potenziamento Staff:</strong> Aumenta danno e effetti delle armi magiche.</li>
+                <li><strong>Shotgun Pellets:</strong> Le armi shotgun sparano più pallettoni — devastante!</li>
+                <li><strong>Rimbalzo:</strong> I proiettili rimbalzano sui muri, ideale in stanze chiuse.</li>
+                <li><strong>Penetrazione:</strong> I proiettili trapassano più nemici consecutivamente.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🛡️ Difensivi e Sopravvivenza</h3>
+            <ul>
+                <li><strong>Vampirismo Energia:</strong> Recuperi energia uccidendo nemici.</li>
+                <li><strong>Onda d'Urto Scudo:</strong> Quando lo scudo è colpito, emette un'onda che distrugge proiettili.</li>
+                <li><strong>Rigenerazione Armatura:</strong> Accelera la rigenerazione dell'armatura in combattimento.</li>
+                <li><strong>Cassa = Cure:</strong> Le casse danno energia e salute. Rompi sempre tutto!</li>
+                <li><strong>Migliore Compagno:</strong> Aumenta danno (+3) e vita (+9) del tuo Pet, e raddoppia la sua rigenerazione.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🎲 Buff Speciali e Condizioni</h3>
+            <ul>
+                <li><strong>Eccezionalmente Talentuoso:</strong> +3 slot buff aggiuntivi.</li>
+                <li><strong>Buff Buffet:</strong> +2 opzioni quando scegli un buff.</li>
+                <li><strong>Scudo Forte:</strong> Il danno in eccesso rispetto all'armatura NON si trasferisce alla salute.</li>
+                <li><strong>Frenesia del Bersagliere:</strong> Danno critico triplicato — combo devastante con Critico.</li>
+                <li><strong>Precisione Estrema:</strong> Critico +100%, ma danno critico -50%. Ottima per armi elementali!</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">🛒 Dove ottenere Buff Extra</div>
+            <p>Oltre alla selezione post-livello, puoi trovare <strong>Buff Bubble</strong> (buff casuale in bolla) acquistabili dal Mercante Misterioso (costa 1 HP), dal Mercante Gentile (costa armatura), o dai Trader speciali al livello X-5.</p>
+        </div>
+    </section>
+
+    <!-- STATUE NEL DUNGEON -->
+    <section id="statue" class="section">
+        <div class="section-header">
+            <h2>Statue nel <span class="accent">Dungeon</span></h2>
+            <p>Nelle stanze con ❗ puoi trovare statue interattive. Costano monete ma danno effetti potenti.</p>
+        </div>
+
+        <div class="lobby-grid">
+            <div class="lobby-item">
+                <div class="li-icon">🧙</div>
+                <div class="li-name">Stregone</div>
+                <div class="li-desc">Spara proiettili magici ad inseguimento verso i nemici.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">⚔️</div>
+                <div class="li-name">Cavaliere</div>
+                <div class="li-desc">Evoca un cavaliere alleato che combatte con te.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🏹</div>
+                <div class="li-name">Elfo</div>
+                <div class="li-desc">Spara un'onda radiale che distrugge tutti i proiettili nelle vicinanze.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">✨</div>
+                <div class="li-name">Sacerdote</div>
+                <div class="li-desc">Ripristina energia con un incantesimo.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🥷</div>
+                <div class="li-name">Assassino</div>
+                <div class="li-desc">Lancia una raffica di coltelli verso i nemici.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🏰</div>
+                <div class="li-name">Paladino</div>
+                <div class="li-desc">Crea uno scudo temporaneo che blocca i prossimi colpi.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🔧</div>
+                <div class="li-name">Ingegnere</div>
+                <div class="li-desc">Piazza dispositivi esplosivi attorno a te.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">💪</div>
+                <div class="li-name">Berserk</div>
+                <div class="li-desc">Potenzia le armi e aumenta la dimensione dei proiettili.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🐺</div>
+                <div class="li-name">Lupo</div>
+                <div class="li-desc">Ripristina 1 HP. Rarissimo e preziosissimo!</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🗡️</div>
+                <div class="li-name">Ladro</div>
+                <div class="li-desc">Spara un'onda che attira i nemici verso di te e aumenta la velocità.</div>
+            </div>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">⭐ Statua Migliore per la Run</div>
+            <p>La <strong>Statua Elfo</strong> è spesso la più utile in difficoltà elevate: l'onda radiale salva la vita quando sei circondato da proiettili. La <strong>Statua Lupo</strong> (+1 HP) è invece la più rara e preziosa in assoluto.</p>
+        </div>
+    </section>
+
+    <!-- UPGRADE SISTEMA -->
+    <section id="upgrade" class="section">
+        <div class="section-header">
+            <h2>Sistema di <span class="accent">Upgrade</span></h2>
+            <p>Come spendere Gemme e Materiali per crescere in modo efficiente.</p>
+        </div>
+
+        <div class="card">
+            <h3>⭐ Livelli di Upgrade Personaggio</h3>
+            <ul>
+                <li><strong>Lv. 1 → 2</strong> (500 gemme): +1 Vita o +1 Scudo</li>
+                <li><strong>Lv. 3</strong> (1.000 gemme): Riduce il cooldown dell'abilità di 1 secondo</li>
+                <li><strong>Lv. 4</strong> (2.000 gemme): Riduce il cooldown dell'abilità di 2 secondi (o -1 sec per abilità multi-carica)</li>
+                <li><strong>Lv. 5</strong> (2.500 gemme): <strong>Potenziamento abilità</strong> — effetti unici per ogni personaggio</li>
+                <li><strong>Lv. 6</strong> (5.000 gemme): Sblocca il <strong>Buff Passivo Permanente</strong> ⭐</li>
+                <li><strong>Lv. 7</strong> (8.000 gemme): Potenzia l'<strong>arma iniziale</strong> del personaggio</li>
+                <li><strong>Lv. 8</strong> (10.000 gemme): Materiale per l'<strong>Artefatto dell'Evocatore</strong></li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">💰 Priorità di Upgrade Consigliata</div>
+            <p>Porta <strong>prima il tuo personaggio principale a livello 6</strong> per il buff passivo — è il ritorno sull'investimento più alto. Poi considera i livelli 4 e 5 per ridurre il cooldown dell'abilità. Il livello 8 è un obiettivo a lungo termine.</p>
+        </div>
+
+        <div class="card">
+            <h3>🔨 Workshop — Crafting Armi</h3>
+            <p>Nel Workshop (Lobby) puoi forgiare armi speciali usando materiali raccolti nel dungeon. I Progetti si trovano nelle <strong>Casse Verdi</strong>, dalla <strong>Gashapon Machine</strong>, e dai <strong>boss</strong>. I materiali si raccolgono uccidendo nemici, aprendo casse verdi, e smontando armi nel Forno di Decomposizione (ottieni ~⅓ dei materiali necessari).</p>
+        </div>
+
+        <div class="card">
+            <h3>🌱 Come Farmare Gemme Velocemente</h3>
+            <ul>
+                <li>Gioca la <strong>Modalità Matrice</strong> — ottima densità di gemme per run.</li>
+                <li>Guarda le <strong>pubblicità</strong> dalla TV nella Lobby ogni giorno.</li>
+                <li>Completa le <strong>missioni giornaliere</strong> dalla bacheca.</li>
+                <li>Raccogli gemme dall'<strong>Albero dei Gioielli</strong> nel Giardino (222 gemme per raccolto).</li>
+                <li>Interagisci con personaggi NPC nel gioco — alcuni danno piccole ricompense.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- NPC NEL DUNGEON -->
+    <section id="npc" class="section">
+        <div class="section-header">
+            <h2>NPC nel <span class="accent">Dungeon</span></h2>
+            <p>Nelle stanze speciali (❗) trovi NPC che offrono servizi preziosi per la tua run.</p>
+        </div>
+
+        <div class="card">
+            <h3>⚒️ Fabbro (Weaponsmith)</h3>
+            <p>Forgia o potenzia un'arma usando materiali. Può migliorare la rarità di un'arma esistente — valuta se hai i materiali!</p>
+        </div>
+
+        <div class="card">
+            <h3>🎓 Mentor</h3>
+            <p>Paga monete per potenziare la tua abilità del personaggio mid-run. Alcune abilità guadagnano effetti completamente nuovi. Accettalo sempre se puoi permettertelo — spesso è game-changing.</p>
+        </div>
+
+        <div class="card">
+            <h3>🏋️ Drillmaster</h3>
+            <p>Addestra i tuoi mercenari, migliorando le loro capacità di raccogliere e usare armi migliori durante la run.</p>
+        </div>
+
+        <div class="card">
+            <h3>🍽️ Cameriere (Waiter)</h3>
+            <p>Serve pietanze speciali con effetti unici sulla run — alcune aumentano il critico, la salute, o danno altri bonus temporanei. Molto più utile di quanto sembri!</p>
+        </div>
+
+        <div class="card">
+            <h3>💫 Pozzo dei Desideri (Wishing Well)</h3>
+            <p>Offri monete per un premio casuale: può darti Progetti per Gioielli, armi rare, o Buff Bubble. Il costo aumenta ogni volta che lo usi nella stessa run.</p>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">🔄 NPC del Tuo Roster nel Dungeon</div>
+            <p>I personaggi che hai <strong>sbloccato ma non stai giocando</strong> appaiono come NPC all'ingresso dei livelli. Interagisci con loro per bonus: il <strong>Cavaliere</strong> dà un'arma casuale, il <strong>Furfante</strong> ti mostra le armi nascoste, la <strong>Sacerdotessa</strong> cura la tua armatura, ecc. Ogni NPC si può usare solo una volta per livello!</p>
+        </div>
+    </section>
+
+    <!-- BOSS -->
+    <section id="boss" class="section">
+        <div class="section-header">
+            <h2>Guida ai <span class="accent">Boss</span></h2>
+            <p>I boss appaiono al livello X-5 di ogni piano. Quando entrano in <strong>fase 2</strong> (HP &lt;50%) diventano più aggressivi e rilasciano sfere energia. Dopo la sconfitta: cassa dorata + semi speciali.</p>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">⚠️ Boss Champion (Elite)</div>
+            <p>A bassa probabilità in Level Mode, garantito in Boss Rush, i boss possono apparire come <strong>Champion</strong>: dimensioni maggiori, +25% HP, pattern più veloci. Usa le bombe in questa fase!</p>
+        </div>
+
+        <!-- PIANO 1 -->
+        <h3 class="weapon-cat-title" style="color:#4ade80;">🌿 Piano 1 — Boss (Lv 1-5)</h3>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#4ade80;">
+                <span class="boss-name">🌿 Devil's Snare (Pianta Carnivora)</span>
+                <span class="boss-diff easy">Facile</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Cannibal Plant (arma)</div>
+                <p><strong>Pattern:</strong> Rimane ferma al centro. Lancia proiettili veloci in spirale e piazza trappole al suolo. Usa le colonne come copertura e spara negli intervalli tra le spirali.</p>
+                <p><strong>Tip:</strong> L'arma melee distrugge tutti i suoi proiettili con facilità. La boss più semplice del gioco.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#a3e635;">
+                <span class="boss-name">🦍 King Snow Ape</span>
+                <span class="boss-diff easy">Facile-Medio</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Snow Ape's Longbow (arma)</div>
+                <p><strong>Pattern:</strong> Si muove rapidamente. Lancia palle di neve che si dividono all'impatto, spara fiocchi di neve inseguenti. In fase 2 la velocità di attacco aumenta notevolmente.</p>
+                <p><strong>Tip:</strong> Mantieni distanza costante. Le palle di neve si spezzano — stai lontano dai muri dove rimbalzano i frammenti. Il Nunchaku distrugge la maggior parte dei proiettili.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#93c5fd;">
+                <span class="boss-name">⛄ Snowman King</span>
+                <span class="boss-diff medium">Medio</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Snowman Eagle (pistola rara — crit congela e invoca pupazzo di neve alleato!)</div>
+                <p><strong>Pattern:</strong> Si muove in giro evocando pupazzi di neve minori che fanno da scudo. Attacca con ondate di ghiaccio radiali. In fase 2 evoca più pupazzi e accelera.</p>
+                <p><strong>Tip:</strong> Usa armi con effetto rimbalzo o penetranti per colpire il boss attraverso i pupazzi. Il Vampiro può rubare vita ai pupazzi durante il combattimento.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#a78bfa;">
+                <span class="boss-name">🧙 Goblin Priest</span>
+                <span class="boss-diff medium">Medio</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Staff of Shooting Stars (arma magica)</div>
+                <p><strong>Pattern:</strong> Si sposta costantemente. Spara un laser circolare, lancia meteoriti (danni AoE con fuoco), invoca goblin alleati. In fase 2 la pioggia di meteoriti è molto più densa.</p>
+                <p><strong>Tip:</strong> La meteorite ha un punto di atterraggio visibile — spostati prima dell'impatto. Dai priorità ai goblin invocati se intralciano. Con immunità fuoco (dal Giardino) il 40% dei suoi attacchi diventa irrilevante.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#fbbf24;">
+                <span class="boss-name">🦀 Giant Crystal Crab</span>
+                <span class="boss-diff medium">Medio (Lungo)</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Crystal Crab's Katana (spada con spike di cristallo al crit)</div>
+                <p><strong>Pattern:</strong> Evoca pilastri di cristallo che bloccano il movimento. Attacca con pinze e proiettili cristallini. <strong>⚠️ MECCANICA SPECIALE:</strong> Entra in modalità difensiva dove ogni attacco che riceve lo <em>cura di 4 HP</em> invece di danneggiarlo!</p>
+                <p><strong>Tip:</strong> Quando le sue chele brillano di luce bianca = modalità difensiva attiva → <strong>SMETTI di sparare immediatamente!</strong> Aspetta che finisca prima di riprendere. Usa armi lente e ad alto danno singolo (cecchino, arco caricato) per evitare di curarlo accidentalmente con fuoco rapido.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#f59e0b;">
+                <span class="boss-name">🎄 Christmas Treant</span>
+                <span class="boss-diff medium">Medio (Stagionale)</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Agitated Trunk (bastone)</div>
+                <p><strong>Pattern:</strong> Carica verso il giocatore, lancia ornamenti esplosivi a pioggia, evoca radici dal suolo. La carica è veloce e travolge.</p>
+                <p><strong>Tip:</strong> La carica telegrafata — si ferma un istante prima. Schiva di lato, non all'indietro. Appare solo nel periodo natalizio o in Boss Rush.</p>
+            </div>
+        </div>
+
+        <!-- PIANO 2 -->
+        <h3 class="weapon-cat-title" style="color:#fb923c;">🏰 Piano 2 — Boss (Lv 2-5)</h3>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#fb923c;">
+                <span class="boss-name">⚔️ Grand Knight (+ Dark Grand Knight)</span>
+                <span class="boss-diff medium">Medio</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Grand Knight's Sword (spada potente)</div>
+                <p><strong>Pattern:</strong> Si muove lentamente ma spara salve di proiettili orizzontali e diagonali. Cambia direzione repentinamente. Il Dark Grand Knight è la versione potenziata con pattern più veloci e proiettili rimbalzanti.</p>
+                <p><strong>Tip:</strong> Rimani in movimento circolare. I suoi proiettili vanno in linee dritte — giraci intorno. Con il Nunchaku si possono deflettere quasi tutte le salve.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#c084fc;">
+                <span class="boss-name">🧙 Grand Wizard</span>
+                <span class="boss-diff medium">Medio</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Staff of Wizard (85% crit! — arma S-tier)</div>
+                <p><strong>Pattern:</strong> Laser ad alta velocità, proiettili magici rimbalzanti a 3-5 vie, onde di energia. Il laser fa molto danno — difficile da schivare in spazio aperto.</p>
+                <p><strong>Tip:</strong> Usa gli angoli delle colonne della stanza per coprire il laser. I proiettili rimbalzanti sono più pericolosi vicino ai muri — rimani al centro. L'arma che droppa (Staff of Wizard) è una delle migliori del gioco.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#94a3b8;">
+                <span class="boss-name">💀 Skeleton King</span>
+                <span class="boss-diff easy">Facile-Medio</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Staff of Skeleton (evoca scheletri alleati)</div>
+                <p><strong>Pattern:</strong> Evoca scheletri guerrieri e arcieri. Spara proiettili ossei a ventaglio. Pattern abbastanza prevedibili e lenti.</p>
+                <p><strong>Tip:</strong> Elimina prima gli scheletri evocati per ridurre la pressione. Il boss stesso è relativamente lento — facile da tenere d'occhio mentre si gestiscono i minion.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#86efac;">
+                <span class="boss-name">🧪 C6H8O6 (Vitamina C)</span>
+                <span class="boss-diff medium">Medio</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Bomber (granate)</div>
+                <p><strong>Pattern:</strong> Lancia bombe che esplodono in proiettili secondari, acido corrosivo a terra, salve di proiettili veloci. L'acido a terra limita lo spazio di movimento.</p>
+                <p><strong>Tip:</strong> Evita l'acido rimanendo al centro della stanza. Le bombe hanno una traiettoria arc — impara il timing e spostati appena si alzano. Con immunità veleno (Alchimista) l'acido diventa innocuo.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#f87171;">
+                <span class="boss-name">👻 Phantom King (Re Fantasma)</span>
+                <span class="boss-diff hard">Difficile</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Skin Fragment del Vampiro</div>
+                <p><strong>Pattern:</strong> Diventa invisibile e si teletrasporta. Quando appare lancia salve di proiettili a 360°. Difficile da trackare. In fase 2 i teletrasporti sono più frequenti.</p>
+                <p><strong>Tip:</strong> Non sparare a caso quando è invisibile — spreca energia. Aspetta che riappaia (c'è un breve flash) e attacca immediatamente. Armi con homing (Windforce, Staff of Wizard) funzionano bene.</p>
+            </div>
+        </div>
+
+        <!-- PIANO 3 -->
+        <h3 class="weapon-cat-title" style="color:#f87171;">🌋 Piano 3 — Boss (Lv 3-5) — I più difficili!</h3>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#a855f7;">
+                <span class="boss-name">👾 Varkolyn Leader</span>
+                <span class="boss-diff hard">Difficile</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Fucile Varkolyn (Leggendario!) + seme Mandragora (immunità veleno)</div>
+                <p><strong>Pattern:</strong> Laser viola ad alta velocità che taglia la stanza, proiettili veleno a pioggia, proiettili inseguenti in fase 2. Il veleno è il pericolo principale.</p>
+                <p><strong>Tip:</strong> Con <strong>immunità veleno</strong> (Alchimista/Mandragora dal Giardino) questo boss è molto più gestibile. Il laser si schiva muovendosi in diagonale. Il drop del Fucile Varkolyn (0 costo energia!) giustifica ogni rischio.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#38bdf8;">
+                <span class="boss-name">🤖 Zulan the Colossus</span>
+                <span class="boss-diff hard">Molto Difficile</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Pietra Magica Blu + materiali rari</div>
+                <p><strong>Pattern:</strong> Il boss più bullet-hell del gioco. 5 droni orbitanti che spesso diventano autonomi e inseguono il giocatore con shotgun burst. Laser continui che riempiono lo schermo. In fase 2 continua ad attaccare anche mentre i droni sono fuori controllo.</p>
+                <p><strong>Tip:</strong> La stanza di Zulan non ha coperture — tutto si basa sulla schivata pura. Muoviti sempre in cerchio. Il Paladino con Holy Warrior o l'Assassino invisibile reggono meglio. <strong>Usa bombe in fase 2!</strong> Armi homing come Staff of Wizard o Windforce riducono la necessità di mirare manualmente.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#f97316;">
+                <span class="boss-name">🐉 Baby Dragon Bros (2 boss!)</span>
+                <span class="boss-diff hard">Difficile</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Pietra Magica Arancione + seme Dragon Fruit Tree (immunità fuoco)</div>
+                <p><strong>Pattern:</strong> DUE dragon separati con barre vita separate ma mostrate come una. Entrambi sparano laser, lanciano meteoriti e orbe di lava esplosive. Se uno entra in fase 2 (o muore) <strong>l'altro si infuria</strong> aumentando drasticamente velocità e danno.</p>
+                <p><strong>Tip:</strong> <strong>Abbatti entrambi allo stesso ritmo</strong> — non focalizzarti su uno solo. Se uno va in fase 2 prima, lo shock dell'altro diventa quasi impossibile da gestire. Con immunità fuoco (Alchimista o Giardino) il 60% dei loro attacchi è nullo.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#ef4444;">
+                <span class="boss-name">🪱 Volcanic Sandworm</span>
+                <span class="boss-diff hard">Difficile</span>
+            </div>
+            <div class="boss-body">
+                <div class="boss-drop">💎 Drop: Pietra Magica Verde + seme Fungo Bruco (+4 salute max)</div>
+                <p><strong>Pattern:</strong> Si immerge nel terreno diventando invulnerabile, poi riemerge violentemente. Spara proiettili esplosivi ad arco, shotgun burst di lava, crea pozze di fuoco al suolo. In fase 2 la frequenza dei tuffi aumenta drasticamente.</p>
+                <p><strong>Tip:</strong> Quando si immerge, spostati — riemerge quasi sempre dove sei tu. I proiettili esplosivi si vedono venire — schivali lateralmente. L'immunità fuoco è preziosa qui. Il <strong>seme Fungo Bruco</strong> (+4 HP max) che droppa è uno dei più preziosi del gioco.</p>
+            </div>
+        </div>
+
+        <div class="tip" style="margin-top:16px;">
+            <div class="tip-label">🏆 Regola Universale per i Boss</div>
+            <p>Entra sempre nel boss con: <strong>armatura piena</strong> (aspetta fuori dalla porta), <strong>energia piena</strong>, e almeno <strong>1-2 bombe</strong> in riserva da usare in fase 2. Se hai il Nirvana Cross nel secondo slot, usalo per ricaricare energia a metà combattimento.</p>
+        </div>
+    </section>
+
+    <!-- BIOMI E LIVELLI SEGRETI -->
+    <section id="biomi" class="section">
+        <div class="section-header">
+            <h2>Biomi & <span class="accent">Livelli Segreti</span></h2>
+            <p>Il dungeon ha <strong>15 biomi</strong> diversi. Ogni piano ha biomi casuali tra una selezione fissa. Alcuni biomi nascosti sono accessibili solo completando condizioni speciali.</p>
+        </div>
+
+        <div class="card">
+            <h3>🗺️ Biomi per Piano</h3>
+            <ul>
+                <li><strong>Piano 1</strong> — Foresta 🌲, Ghiacciaio ❄️, Rovine Antiche 🏛️, Rovine Meccaniche ⚙️</li>
+                <li><strong>Piano 2</strong> — Regno dei Cavalieri 🏰, Dungeon 💀, Halloween 🎃, Chiseltown 🪨</li>
+                <li><strong>Piano 3</strong> — Astronave 🚀, Vulcano 🌋, Neo Isle 🏙️</li>
+            </ul>
+        </div>
+
+        <h3 style="font-family:'Rajdhani',sans-serif;color:#c4b5fd;margin:18px 0 10px;font-size:1.1rem;">🔮 Biomi Segreti (Nascosti)</h3>
+        <div class="tip">
+            <div class="tip-label">⚠️ Come accedere ai biomi segreti</div>
+            <p>Appaiono casualmente al Piano 2 sostituendo uno dei biomi normali. Se scegli l'ingresso giusto durante il livello 2-x, potresti entrare in uno di questi. Completare un bioma segreto senza ricevere danni alla salute ti dà una <strong>condizione positiva permanente</strong> per quella run!</p>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#86efac;">
+                <span class="boss-name">🌿 Grotta (Cave)</span>
+                <span class="boss-diff easy">Bioma Segreto</span>
+            </div>
+            <div class="boss-body">
+                <p>Ambiente buio con cristalli luminosi. Boss: <strong>Cave Ice Bug</strong> — un verme di ghiaccio che si immerge e riemerge, evoca blocchi di ghiaccio che può consumare per <em>curarsi</em>. Difficile da burst velocemente.</p>
+                <p><strong>Condizione Positiva (no danni):</strong> Strong Body — Aumenta la salute massima.</p>
+                <p><strong>Tip:</strong> Distruggi i blocchi di ghiaccio prima che il boss li assorba. Armi penetranti colpiscono il bug anche quando è parzialmente immerso.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#d1d5db;">
+                <span class="boss-name">⚰️ Cimitero (Grave)</span>
+                <span class="boss-diff medium">Bioma Segreto</span>
+            </div>
+            <div class="boss-body">
+                <p>Atmosfera gotica con lapidi come coperture. Boss: <strong>Headless Knight & His Horse</strong> — DUE entità separate! Il cavaliere decapitato attacca con spada, il cavallo carica e calpesta. Ogni entità ha la sua barra vita.</p>
+                <p><strong>Condizione Positiva (no danni):</strong> Tough Spirit — Riduce i danni subiti.</p>
+                <p><strong>Tip:</strong> Concentrati prima sul cavallo — la sua carica è più pericolosa e imprevedibile. Usa le lapidi come copertura dal cavaliere mentre gestisci il cavallo.</p>
+            </div>
+        </div>
+
+        <div class="boss-card">
+            <div class="boss-header" style="border-color:#86efac;">
+                <span class="boss-name">🌊 Palude (Swamp)</span>
+                <span class="boss-diff hard">Bioma Segreto</span>
+            </div>
+            <div class="boss-body">
+                <p>Pozze di melma che rallentano il movimento. Boss: <strong>Anubis</strong> — evoca mummie, lancia scarabei inseguenti, proiettili a spirale. Può evocare sarcofagi-trappola. Pattern molto vari e imprevedibili.</p>
+                <p><strong>Condizione Positiva (no danni):</strong> Clear Mind — Aumenta il danno critico.</p>
+                <p><strong>Tip:</strong> Elimina subito le mummie evocate — diventano pericolose in numero. I scarabei inseguenti si schivano correndo in cerchio. L'immunità veleno aiuta con le pozze di melma.</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📋 Condizioni (Debuff da Biomi Segreti)</h3>
+            <p>Se prendi danni alla salute o muori in un bioma segreto, ricevi una <strong>condizione negativa</strong> per quella run che dura fino alla fine. Esempi:</p>
+            <ul>
+                <li><strong>Weak Body</strong> — Salute massima ridotta. Pericoloso in Badass.</li>
+                <li><strong>Broken Spirit</strong> — Danni aumentati subiti.</li>
+                <li><strong>Dizzy</strong> — I controlli si invertono occasionalmente!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- GEMME GRATIS & MISSIONI -->
+    <section id="gemme" class="section">
+        <div class="section-header">
+            <h2>Gemme Gratis & <span class="accent">Progressione</span></h2>
+            <p>Guida completa per ottenere gemme e risorse senza spendere soldi reali.</p>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">💎 Quante Gemme Servono?</div>
+            <p>Per portare UN personaggio al massimo (Lv.8) servono <strong>30.500 gemme</strong>. Per sbloccare tutti i personaggi gratuiti servono circa <strong>45.000 gemme</strong>. Pianifica bene le priorità!</p>
+        </div>
+
+        <h3 style="font-family:'Rajdhani',sans-serif;color:#4ade80;margin:16px 0 10px;font-size:1.1rem;">🆓 Fonti di Gemme Gratuite (Giornaliere)</h3>
+
+        <div class="lobby-grid">
+            <div class="lobby-item">
+                <div class="li-icon">📺</div>
+                <div class="li-name">TV Lobby</div>
+                <div class="li-desc">3-5 pubblicità al giorno. ~500 gemme/giorno se le guardi tutte.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">📬</div>
+                <div class="li-name">Postino</div>
+                <div class="li-desc">Consegna 500 gem/giorno (600 con upgrade Cat Shop). Interagisci ogni giorno!</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">📋</div>
+                <div class="li-name">Missioni (Bacheca)</div>
+                <div class="li-desc">2 missioni giornaliere. Gem + materiali. Completabili in qualsiasi modalità.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🏆</div>
+                <div class="li-name">Challenge Giornaliera</div>
+                <div class="li-desc">Completa la run con 4 condizioni specifiche per reward bonus.</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">🌳</div>
+                <div class="li-name">Albero dei Gioielli</div>
+                <div class="li-desc">222 gem per raccolta. Cresce ogni pochi giorni. Pianta prioritaria!</div>
+            </div>
+            <div class="lobby-item">
+                <div class="li-icon">📖</div>
+                <div class="li-name">Soul Knight Handbook</div>
+                <div class="li-desc">Achievement con ricompense gemme. Controlla spesso nuovi traguardi sbloccati.</div>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top:14px;">
+            <h3>📋 Sistema Missioni (Task Board) — Guida Completa</h3>
+            <ul>
+                <li><strong>Missioni Wanted (Caccia):</strong> Uccidi X nemici/boss specifici. Si aggiornano 1-2 al giorno. Puoi averne massimo 4 attive.</li>
+                <li><strong>Missione Inferiore Sinistra:</strong> Se hai sbloccato Boss Rush, questa missione dà sempre <strong>2 Penne della Valchiria</strong> al completamento (si rinnova ogni giorno!).</li>
+                <li><strong>Challenge Giornaliera:</strong> Run con 4 condizioni casuali (buff o debuff). Se completata con successo → gemme bonus. Puoi cambiare le condizioni 15 volte/giorno pagando 200 gem all'Ufficiale.</li>
+                <li><strong>Compatibilità:</strong> Le missioni si completano in Level Mode, Boss Rush, The Origin, Co-op. NON in Matrix Mode o modalità stagionali.</li>
+            </ul>
+        </div>
+
+        <h3 style="font-family:'Rajdhani',sans-serif;color:#f59e0b;margin:18px 0 10px;font-size:1.1rem;">🦅 Penne della Valchiria — Come Sbloccare Boss Rush</h3>
+        <div class="card">
+            <h3>🏹 Cos'è la Valchiria?</h3>
+            <p>Un NPC che appare nelle stanze speciali (❗) del Piano 3. Pagandola in monete per 3 volte durante la run, ottieni le prime <strong>3 Penne della Valchiria</strong>. Con 3 penne puoi accedere al Boss Rush Mode dalla Magic Area.</p>
+            <ul style="margin-top:10px;">
+                <li>Dopo aver ottenuto le prime 3 penne dalla Valchiria in-run, le penne successive si ottengono solo dalla <strong>missione giornaliera</strong> in basso a sinistra nella bacheca (2 penne/giorno).</li>
+                <li>Ogni ingresso al Boss Rush consuma 1 penna. Accumulane un po' prima di giocare intensamente.</li>
+                <li>La Valchiria appare poi in forma permanente nella <strong>Magic Area</strong> sopra la lapide, dove apre il portale per Boss Rush.</li>
+            </ul>
+        </div>
+
+        <h3 style="font-family:'Rajdhani',sans-serif;color:#38bdf8;margin:18px 0 10px;font-size:1.1rem;">📈 Priorità di Spesa Gemme (Consigli)</h3>
+        <div class="card">
+            <h3>💡 Ordine Consigliato per i Principianti</h3>
+            <ul>
+                <li><strong>1° Cassaforte Lobby</strong> (max: +10 monete di partenza) — Investimento piccolo, ritorno enorme su ogni run.</li>
+                <li><strong>2° Personaggio Principale → Lv.6</strong> — Il buff passivo cambia il gioco. Costa ~11.000 gem totali.</li>
+                <li><strong>3° Sblocca Furfante o Assassino</strong> — I personaggi free più forti. 2.000-4.000 gem.</li>
+                <li><strong>4° Plot Giardino extra</strong> — Più piante = più buff permanenti pre-run. Ottimo investimento.</li>
+                <li><strong>5° Gashapon / Statua Sacra</strong> — Solo dopo aver coperto i punti precedenti.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🚫 Cosa NON fare con le Gemme</h3>
+            <ul>
+                <li>Non spendere gemme per <strong>continuare una run</strong> (resurrezione) — raramente vale il costo, soprattutto all'inizio.</li>
+                <li>Non comprare armi dalla <strong>Gashapon</strong> come priorità — il ritorno è casuale e basso.</li>
+                <li>Non sbloccare personaggi costosi <strong>prima</strong> di portare il tuo main al Lv.6.</li>
+            </ul>
+        </div>
+
+        <h3 style="font-family:'Rajdhani',sans-serif;color:#a78bfa;margin:18px 0 10px;font-size:1.1rem;">🏅 Achievement Notevoli</h3>
+        <div class="card">
+            <h3>🏆 Achievement che Sbloccano Personaggi</h3>
+            <ul>
+                <li><strong>"Veteran Hunter" / "Seasoned Hunter"</strong> — Completa 10 incarichi dalla bacheca → Sblocca l'Ufficiale.</li>
+                <li><strong>"No Discord, No Concord"</strong> — Sconfiggi l'Airbender mentre appare come nemico in <strong>The Origin Mode</strong> → Sblocca il Dominatore dell'Aria. Completamente gratuito!</li>
+                <li><strong>Robot</strong> — Non è un achievement ma crafting: Vai nel Workshop come Ingegnere con 20 Parti + 20 Batterie.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>🎁 Cellario della Lobby — Dove Controllare gli Achievement</h3>
+            <p>Gli achievement si trovano nel <strong>Cellario (Cellar)</strong>, l'area sotto la Lobby accessibile tramite la scala. Il 2° piano del Cellario contiene lo storico delle tue run, la galleria mostri, gli achievement (con ricompense da riscuotere alla Email) e le statistiche complete.</p>
+        </div>
+    </section>
+
+    <!-- GLOSSARIO -->
+    <section id="glossario" class="section">
+        <div class="section-header">
+            <h2><span class="accent">Glossario</span> & Termini</h2>
+            <p>Tutti i termini tecnici del gioco spiegati semplicemente.</p>
+        </div>
+
+        <div class="card">
+            <h3>🔤 Termini di Gioco</h3>
+            <ul>
+                <li><strong>DPS</strong> — Damage Per Second. Indica quanto danno fai in un secondo di fuoco continuo.</li>
+                <li><strong>AoE</strong> — Area of Effect. Attacchi che colpiscono un'area, non un singolo nemico.</li>
+                <li><strong>Roguelike</strong> — Genere dove ogni morte azzera i progressi della run ma non quelli permanenti.</li>
+                <li><strong>Bullet Hell</strong> — Stile di gioco dove lo schermo è coperto di proiettili nemici da schivare.</li>
+                <li><strong>Homing</strong> — Proiettili che inseguono automaticamente i nemici.</li>
+                <li><strong>Lifesteal</strong> — Meccanica che cura il giocatore proporzionalmente ai danni inflitti.</li>
+                <li><strong>Burst</strong> — Alto danno concentrato in poco tempo (es. contro un boss).</li>
+                <li><strong>Tank</strong> — Personaggio o alleato che assorbe i danni al posto degli altri.</li>
+                <li><strong>Proc</strong> — Quando un effetto si attiva (es. "il veleno si procca al critico").</li>
+                <li><strong>Cooldown (CD)</strong> — Tempo di ricarica di un'abilità prima di poterla riusare.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🎮 Termini Specifici di Soul Knight</h3>
+            <ul>
+                <li><strong>Buff Bubble</strong> — Pallina che dà un buff casuale. Si trova nei negozi o da Mercante Misterioso.</li>
+                <li><strong>Buff Passivo</strong> — Bonus permanente sbloccato al Lv.6 del personaggio, attivo in ogni run.</li>
+                <li><strong>Condizione</strong> — Effetto (positivo o negativo) applicato dalla Challenge della bacheca o dai biomi segreti.</li>
+                <li><strong>Champion / Elite</strong> — Versione potenziata di un nemico o boss. Più grande, più HP, più aggressivo.</li>
+                <li><strong>Attachment (Pezzi)</strong> — Componenti che modificano le armi (es. ottica, silenziatore, mirino). Non funzionano su armi rosse.</li>
+                <li><strong>Reforging Furnace</strong> — Forno che trasforma un'arma in un'altra dello stesso tipo ma di qualità potenzialmente migliore.</li>
+                <li><strong>Forge (Fusione)</strong> — Combinare due armi dello stesso tipo per ottenerne una più rara/potente.</li>
+                <li><strong>Design Table</strong> — Tavolo nella Lobby per sviluppare progetti e creare eroi o oggetti speciali.</li>
+                <li><strong>Affinità Pet</strong> — Percentuale di legame col Pet. Al 100% si sblocca la sua abilità unica.</li>
+                <li><strong>Penna della Valchiria</strong> — Biglietto d'ingresso per il Boss Rush Mode. Si guadagna dal NPC Valchiria e dalla missione giornaliera.</li>
+                <li><strong>Frammento Enigmatico</strong> — Materiale raro per crafting gioielli. Si ottiene principalmente in The Origin.</li>
+                <li><strong>Magic Stone</strong> — La pietra al centro di ogni boss room di fine piano. Toccarla completa il piano.</li>
+                <li><strong>The Origin Chapter</strong> — Il nome esteso della modalità Tower Defense. "L'Origine" nella UI italiana.</li>
+                <li><strong>Fish Chips</strong> — Valuta premium del gioco. Si ottiene comprando o da eventi speciali della Cat Shop.</li>
+                <li><strong>Free Trial Voucher</strong> — Provare un personaggio premium gratis per una run. Si ottiene da missioni.</li>
+            </ul>
+        </div>
+
+        <div class="tip">
+            <div class="tip-label">💡 Tip Finali per Nuovi Giocatori</div>
+            <p>Soul Knight premia la <strong>pazienza e la conoscenza dei pattern</strong>. Non correre — osserva ogni boss almeno una volta prima di aggredirlo. Le prime 10-20 run sono di apprendimento: non preoccuparti di morire, impara le meccaniche e acumula gemme per gli upgrade permanenti che renderanno le run future molto più facili.</p>
+        </div>
+    </section>
+
+    <!-- AI BUILD -->
+    <section id="ai-build" class="section">
+        <div class="section-header">
+            <h2>Build <span class="accent">AI ✨</span></h2>
+            <p>Scegli eroe e stile per generare la tua build perfetta.</p>
+        </div>
+
+        <p style="font-size:.85rem; color:var(--muted); margin-bottom:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Scegli l'Eroe</p>
+        <div class="ai-hero-grid" id="hero-grid">
+            <button class="ai-hero-btn selected" data-value="Cavaliere" onclick="selectHero(this)"><span class="hero-emoji">⚔️</span>Cavaliere</button>
+            <button class="ai-hero-btn" data-value="Furfante" onclick="selectHero(this)"><span class="hero-emoji">🗡️</span>Furfante</button>
+            <button class="ai-hero-btn" data-value="Strega" onclick="selectHero(this)"><span class="hero-emoji">🧙</span>Strega</button>
+            <button class="ai-hero-btn" data-value="Assassino" onclick="selectHero(this)"><span class="hero-emoji">🥷</span>Assassino</button>
+            <button class="ai-hero-btn" data-value="Alchimista" onclick="selectHero(this)"><span class="hero-emoji">⚗️</span>Alchimista</button>
+            <button class="ai-hero-btn" data-value="Ingegnere" onclick="selectHero(this)"><span class="hero-emoji">🔧</span>Ingegnere</button>
+            <button class="ai-hero-btn" data-value="Sacerdotessa" onclick="selectHero(this)"><span class="hero-emoji">✨</span>Sacerdote</button>
+        </div>
+
+        <p style="font-size:.85rem; color:var(--muted); margin-bottom:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;">Stile di Gioco</p>
+        <div class="style-grid" id="style-grid">
+            <button class="style-btn selected" data-value="Aggressivo (Massimo DPS)" onclick="selectStyle(this)"><span class="style-emoji">⚡</span>Aggressivo</button>
+            <button class="style-btn" data-value="Difensivo (Sopravvivenza)" onclick="selectStyle(this)"><span class="style-emoji">🛡️</span>Difensivo</button>
+            <button class="style-btn" data-value="Bilanciato (Controllo)" onclick="selectStyle(this)"><span class="style-emoji">⚖️</span>Bilanciato</button>
+            <button class="style-btn" data-value="Speedrun" onclick="selectStyle(this)"><span class="style-emoji">💨</span>Speedrun</button>
+        </div>
+
+        <button class="generate-btn" id="gen-btn" onclick="generateGeminiBuild()">✨ Genera Build</button>
+
+        <div id="ai-spinner" class="spinner"></div>
+        <div id="ai-error" class="ai-error"></div>
+        <div id="ai-output" class="ai-result-card"></div>
+    </section>
+
+</main>
+
+<!-- Scroll Top -->
+<button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- Bottom Navigation -->
+<nav class="bottom-nav" id="bottom-nav">
+    <button class="nav-item active" data-section="home" onclick="showSection('home', this)">
+        <span class="nav-emoji">🏠</span><span class="nav-label">Home</span>
+    </button>
+    <button class="nav-item" data-section="meccaniche" onclick="showSection('meccaniche', this)">
+        <span class="nav-emoji">⚙️</span><span class="nav-label">Basi</span>
+    </button>
+    <button class="nav-item" data-section="personaggi" onclick="showSection('personaggi', this)">
+        <span class="nav-emoji">🧙</span><span class="nav-label">Eroi</span>
+    </button>
+    <button class="nav-item" data-section="pet" onclick="showSection('pet', this)">
+        <span class="nav-emoji">🐾</span><span class="nav-label">Pet</span>
+    </button>
+    <button class="nav-item" data-section="gioielli" onclick="showSection('gioielli', this)">
+        <span class="nav-emoji">💎</span><span class="nav-label">Gioielli</span>
+    </button>
+    <button class="nav-item" data-section="armi" onclick="showSection('armi', this)">
+        <span class="nav-emoji">🔫</span><span class="nav-label">Armi</span>
+    </button>
+    <button class="nav-item" data-section="mercenari" onclick="showSection('mercenari', this)">
+        <span class="nav-emoji">💰</span><span class="nav-label">NPC</span>
+    </button>
+    <button class="nav-item" data-section="modalita" onclick="showSection('modalita', this)">
+        <span class="nav-emoji">🎮</span><span class="nav-label">Modalità</span>
+    </button>
+    <button class="nav-item" data-section="giardino" onclick="showSection('giardino', this)">
+        <span class="nav-emoji">🌿</span><span class="nav-label">Giardino</span>
+    </button>
+    <button class="nav-item" data-section="lobby" onclick="showSection('lobby', this)">
+        <span class="nav-emoji">🏰</span><span class="nav-label">Lobby</span>
+    </button>
+    <button class="nav-item" data-section="mappa" onclick="showSection('mappa', this)">
+        <span class="nav-emoji">🗺️</span><span class="nav-label">Mappa</span>
+    </button>
+    <button class="nav-item" data-section="casse" onclick="showSection('casse', this)">
+        <span class="nav-emoji">📦</span><span class="nav-label">Casse</span>
+    </button>
+    <button class="nav-item" data-section="buff" onclick="showSection('buff', this)">
+        <span class="nav-emoji">⚡</span><span class="nav-label">Buff</span>
+    </button>
+    <button class="nav-item" data-section="statue" onclick="showSection('statue', this)">
+        <span class="nav-emoji">🗿</span><span class="nav-label">Statue</span>
+    </button>
+    <button class="nav-item" data-section="upgrade" onclick="showSection('upgrade', this)">
+        <span class="nav-emoji">⬆️</span><span class="nav-label">Upgrade</span>
+    </button>
+    <button class="nav-item" data-section="npc" onclick="showSection('npc', this)">
+        <span class="nav-emoji">🧑‍🤝‍🧑</span><span class="nav-label">NPC</span>
+    </button>
+    <button class="nav-item" data-section="boss" onclick="showSection('boss', this)">
+        <span class="nav-emoji">💀</span><span class="nav-label">Boss</span>
+    </button>
+    <button class="nav-item" data-section="biomi" onclick="showSection('biomi', this)">
+        <span class="nav-emoji">🗺️</span><span class="nav-label">Biomi</span>
+    </button>
+    <button class="nav-item" data-section="gemme" onclick="showSection('gemme', this)">
+        <span class="nav-emoji">💎</span><span class="nav-label">Gemme</span>
+    </button>
+    <button class="nav-item" data-section="glossario" onclick="showSection('glossario', this)">
+        <span class="nav-emoji">📖</span><span class="nav-label">Glossario</span>
+    </button>
+    <button class="nav-item ai-nav" data-section="ai-build" onclick="showSection('ai-build', this)">
+        <span class="nav-emoji">✨</span><span class="nav-label">AI Build</span>
+    </button>
+</nav>
+
+<script>
+    const apiKey = "";
+
+    // Section switching
+    function showSection(id, btn) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        if (btn) btn.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Scroll nav item into view
+        if (btn) btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    // Collapse accordion
+    function toggleCollapse(btn) {
+        btn.classList.toggle('open');
+        const body = btn.nextElementSibling;
+        body.classList.toggle('open');
+    }
+
+    // AI Builder state
+    let selectedHero = 'Cavaliere';
+    let selectedStyle = 'Aggressivo (Massimo DPS)';
+
+    function selectHero(btn) {
+        document.querySelectorAll('.ai-hero-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedHero = btn.dataset.value;
+    }
+
+    function selectStyle(btn) {
+        document.querySelectorAll('.style-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedStyle = btn.dataset.value;
+    }
+
+    // Generate build via Anthropic API
+    async function generateGeminiBuild() {
+        const outputDiv = document.getElementById('ai-output');
+        const spinner = document.getElementById('ai-spinner');
+        const errorDiv = document.getElementById('ai-error');
+        const genBtn = document.getElementById('gen-btn');
+
+        outputDiv.style.display = 'none';
+        errorDiv.style.display = 'none';
+        spinner.style.display = 'block';
+        genBtn.disabled = true;
+        genBtn.textContent = '⏳ Generando…';
+
+        const prompt = `Sei un esperto veterano di "Soul Knight". 
+Genera una build per il personaggio "${selectedHero}" con stile "${selectedStyle}".
+Usa SOLO tag HTML di base (h3, h4, ul, li, strong, p). Non usare markdown.
+
+Struttura:
+<h3>Build: ${selectedHero} — ${selectedStyle}</h3>
+<ul>
+    <li><strong>Arma Principale:</strong> (arma consigliata)</li>
+    <li><strong>Arma Secondaria:</strong> (melee o supporto)</li>
+    <li><strong>Buff Consigliati:</strong> (3 buff di fine livello)</li>
+    <li><strong>Statua Migliore:</strong> (statua)</li>
+</ul>
+<h4>Strategia:</h4>
+<p>(Breve spiegazione su come usarla efficacemente)</p>`;
+
+        const payload = {
+            model: "claude-sonnet-4-20250514",
+            max_tokens: 1000,
+            messages: [{ role: "user", content: prompt }]
+        };
+
+        const maxRetries = 3;
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                const response = await fetch("https://api.anthropic.com/v1/messages", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("API Error " + response.status);
+
+                const data = await response.json();
+                let text = data.content?.map(b => b.text || '').join('') || 'Errore generazione.';
+                text = text.replace(/```html|```/g, '').trim();
+
+                spinner.style.display = 'none';
+                genBtn.disabled = false;
+                genBtn.textContent = '✨ Genera Build';
+                outputDiv.innerHTML = text;
+                outputDiv.style.display = 'block';
+                outputDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                return;
+
+            } catch (err) {
+                if (i === maxRetries - 1) {
+                    spinner.style.display = 'none';
+                    genBtn.disabled = false;
+                    genBtn.textContent = '✨ Genera Build';
+                    errorDiv.textContent = '⚠️ Errore di connessione. Riprova tra qualche secondo.';
+                    errorDiv.style.display = 'block';
+                } else {
+                    await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+                }
+            }
+        }
+    }
+
+    // Scroll to top button
+    window.addEventListener('scroll', () => {
+        document.getElementById('scrollTopBtn').style.display = window.scrollY > 100 ? 'block' : 'none';
+    });
+</script>
+
+</body>
+</html>
